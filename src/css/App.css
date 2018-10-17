@@ -6,6 +6,12 @@ body{
 	margin: 0 auto;
 }
 
+.row{
+	width: 100%;
+	clear: both;
+	display: flex;
+}
+
 @media(min-width: 768px){
 	.container{
 		max-width: 750px

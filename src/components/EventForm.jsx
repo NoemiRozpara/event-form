@@ -59,14 +59,26 @@ export default class EventForm extends Component {
 	            				   type="text" 
 	            				   placeholder="Make it short and clear" 
 	            				   required />
-	            			<label htmlFor="title" className="row-label">Title</label>
+	            			<label htmlFor="title" 
+	            				   className="row-label">Title</label>
             			</div>
             			<div className="form-row">
-	            			<textarea id="description" 
-	            					  placeholder="Write about your event, be creative" 
-	            					  maxLength="140" 
-	            					  required />
-	            			<label htmlFor="description" className="row-label">Description</label>
+            				<div className="flex-item">
+            					<div className="row">
+			            			<textarea id="description" 
+			            					  placeholder="Write about your event, be creative" 
+			            					  maxLength="140" 
+			            					  rows="10"
+			            					  aria-describedby="maxLength"
+			            					  required />
+			            		</div>
+            					<div className="row">
+			            			<span className="info" id="maxLength">Max length 140 characters</span>
+			            			<span className="info" id="charCounter">0/140</span>
+		            			</div>
+	            			</div>
+	            			<label htmlFor="description" 
+	            				   className="row-label">Description</label>
 	            		</div>
             			<div className="form-row">
 	            			<select id="category" defaultValue="Please select cat">
@@ -82,7 +94,7 @@ export default class EventForm extends Component {
 		                </div>
 	                    <div className="form-row">
 	                    	<fieldset name="payment" className="form-section-inline">
-	                    		<div className="field-set-inline">
+	                    		<div className="field-set-inline has-legend">
 				                    <input type="radio" 
 				                    		name="payment" 
 				                    		value={0} 
@@ -107,7 +119,7 @@ export default class EventForm extends Component {
 		            			   placeholder="Number" 
 		            			   aria-describedby="rewardPointsDescription" />
 	            			<label htmlFor="rewardPoints" className="row-label">Reward</label>
-	            			<span id="rewardPointsDescription">reward points for attendance</span>
+	            			<span id="rewardPointsDescription" className="info">reward points for attendance</span>
 	            		</div>
             		</fieldset>
             		<fieldset name="Coordinator" className="form-section">
@@ -116,10 +128,13 @@ export default class EventForm extends Component {
 	            			<select id="responsible" required>
 	            				<optgroup label="Me">
 	            					{ this.state.loggedInName ?
-		            					<option key={-1} value={this.state.loggedIn}> 
+		            					<option key={-1} 
+		            							value={this.state.loggedIn}> 
 		            						{ this.state.loggedInName }
 		            					</option> :
-		            					<option key={-1} value={false} disabled > 
+		            					<option key={-1} 
+		            							value={false} 
+		            							disabled > 
 		            						-
 		            					</option>
 		            				}
@@ -139,7 +154,9 @@ export default class EventForm extends Component {
 	            			<label htmlFor="responsible" className="row-label">Responsible</label>
 	                    </div>
             			<div className="form-row">
-		                    <input type="email" id="email" />
+		                    <input type="email" 
+		                    	   id="email"
+		                    	   placeholder="Email" />
 		                    <label htmlFor="email" className="row-label">E-mail</label>
 	                    </div>
             		</fieldset>
@@ -150,11 +167,13 @@ export default class EventForm extends Component {
 		                    	<div className="field-set-inline">
 				                    <input type="date" 
 				                    	   id="startDate" 
+				                    	   pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}"
 				                    	   required/>
+				                    <label htmlFor="startDate" className="row-label" aria-label="start date">Starts on</label>
+									<label htmlFor="startTime" aria-label="start hour">at</label>
 				                    <input type="time" 
-				                    	   id="startTime" 
-				                    	   required/>
-									<label htmlFor="startTime">at</label>
+				                    	   id="startTime"
+				                    	   required/>   
 				                    <input type="radio" 
 				                    	   name="eventTime" 
 				                    	   value="AM" 
@@ -166,15 +185,14 @@ export default class EventForm extends Component {
 				                    	   id="pm"/>
 				                    <label htmlFor="pm">PM</label>
 				                </div>
-	                    		<legend>Starts on</legend>
 				            </fieldset>
 	                    </div>
             			<div className="form-row">
 		                    <input type="number" 
 		                    	   id="duration" 
-		                    	   required/>
+		                    	   placeholder="Number"/>
 							<label htmlFor="duration" className="row-label">Duration</label>
-		                    <span>hour</span>
+		                    <span className="info">hour</span>
 		                </div>
             		</fieldset>
             		<input type="submit" value="Publish event" />
