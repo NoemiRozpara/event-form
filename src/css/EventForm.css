@@ -1,0 +1,86 @@
+.form-section{
+	border: none;
+	-webkit-box-shadow: 0px 0px 5px 0px rgba(150,150,150,0.5);
+	-moz-box-shadow: 0px 0px 5px 0px rgba(150,150,150,0.5);
+	box-shadow: 0px 0px 5px 0px rgba(150,150,150,0.5);
+	border-radius: 5px;
+	background-color: #FFF;
+	padding: 2em 50px 1em
+}
+
+.form-section legend{
+	color: #325387;
+	font-size: 1.6em;
+	position: relative;
+	top: 1em;
+	border-bottom: 1px solid #CCC;
+	padding: 10px 0;
+	width: 100%;
+}
+
+.form-section input:not([type="number"]), .form-section textarea, .form-section select{
+	width: 50%;
+	display: block;
+	margin: 0 25% 0 5%
+}
+
+.form-row{
+	//min-width: calc(100% - 100px);
+	display: flex;
+	align-content: stretch;
+	width: 80%;
+	margin: 10px 10% 10px 0;
+}
+
+.form-row input:not([type="number"]), .form-row textarea, .form-row select{
+	display: initial;
+	width: initial;
+	margin: 0;
+	flex-grow: 1
+}
+
+input[type="radio"]{
+	flex-grow: 0 !important
+}
+
+.form-section-inline{
+	padding: 0;
+	margin: 0;
+	border: none;
+}
+
+label.row-label, .form-section-inline legend{
+	text-transform: uppercase;
+	color: #C7D2E0;
+	font-size: 1em;
+	width: 200px;
+	border: none;
+	padding: 0;
+	order: -1;
+}
+
+.form-section-inline .field-set-inline{
+	margin-left: 200px;
+}
+
+input[type="submit"]{
+	margin: auto;
+	padding: 10px 15px;
+	background-color: #DF7F1B;
+	color: #FFF;
+	display: block;
+	margin-top: 5px;
+	text-transform: uppercase;
+}
+
+input:required + label.row-label::after{
+	content: '*'
+}
+
+input:active, input:focus, textarea:active, textarea:focus, select:active, select:focus{
+	outline: 1px solid #FCB0AF;
+}
+
+input:active + label.row-label, input:focus + label.row-label, textarea:active + label.row-label, textarea:focus + label.row-label, select:active + label.row-label, select:focus + label.row-label, .field-set-inline:focus-within ~ legend{
+	color: #FCB0AF
+}
