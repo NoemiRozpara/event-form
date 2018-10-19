@@ -1,0 +1,4 @@
+stringi z pliku PO
+scss transpilacja
+różne błędy
+"Me - Imie nazwisko"

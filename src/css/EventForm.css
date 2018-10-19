@@ -46,17 +46,8 @@
 }
 
 .form-section input:not([type="number"]), .form-section textarea, .form-section select{
-	width: 50%;
 	display: block;
-	margin: 0 25% 0 5%
-}
-
-.form-row{
-	//min-width: calc(100% - 100px);
-	display: flex;
-	align-content: stretch;
-	width: 80%;
-	margin: 10px 10% 10px 0;
+	flex-grow: 1;
 }
 
 .form-row input:not([type="number"]), .form-row textarea, .form-row select{
@@ -85,7 +76,7 @@ label, .info{
 	font-style: italic;
 }
 
-label.row-label, .form-section-inline legend{
+.form-row-label{
 	text-transform: uppercase;
 	color: #A1B2CD;
 	font-size: 1em;
@@ -94,6 +85,11 @@ label.row-label, .form-section-inline legend{
 	padding: 0;
 	order: -1;
 	display: inline-block;
+}
+
+.form-row-group{
+	width: calc(80% - 200px);
+	display: flex;
 }
 
 .form-section-inline .field-set-inline{

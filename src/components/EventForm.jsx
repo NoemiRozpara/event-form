@@ -1,8 +1,17 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import categories from '../data/categories.json'
-import employes from '../data/employes.json'
+import employees from '../data/employes.json'
 import '../css/EventForm.css'
+import FormSection from './FormSection'
+import FormRow from './FormRow'
+import FormControl from './FormControl'
+import TextArea from './TextArea'
+import PaymentSection from './PaymentSection'
+import StartTime from './StartTime'
+import Coordinator from './Coordinator'
+import Category from './Category'
+import Duration from './Duration'
 
 export default class EventForm extends Component {
 
@@ -10,13 +19,22 @@ export default class EventForm extends Component {
         super(props, context);
         this.state = {
             categories: [],
-            employes: [],
+            employees: [],
             errorOccured: false,
             loading: true,
             loggedInId: 3,
             loggedInName: ''
         }
-        //this.setRating = this.setRating.bind(this);
+
+        this.allRefs = {
+        	title: React.createRef(),
+        	rewardPoints: React.createRef()
+        }
+
+        this.allRefs = [];
+        this.createRef = this.createRef.bind(this);
+        this.validateForm = this.validateForm.bind(this);
+        this.submitForm = this.submitForm.bind(this);
     }
 
     componentDidMount(){
@@ -39,164 +57,128 @@ export default class EventForm extends Component {
             })
             console.log(error);
        });*/
-       let loggedInUser = employes.find(x => x.id === this.state.loggedInId);
+       let loggedInUser = employees.find(x => x.id === this.state.loggedInId);
     	this.setState({ 
 			loading: false,
 			categories: categories,
-			employes: employes,
-			loggedInName: loggedInUser !== undefined ? (loggedInUser.name + ' ' + loggedInUser.lastname) : false
+			employees: employees,
+			loggedInName: loggedInUser !== undefined ? (loggedInUser.name + ' ' + loggedInUser.lastname) : false,
+            displayForm: true,
+            submissionError: false
 		})
+    }
+
+    createRef(name){
+    	this.allRefs[name] = React.createRef()
+    	return(this.allRefs[name])
+    }
+
+    validateForm(){
+    	let error = Object.keys(this.allRefs).some((ref) => { 
+            if(typeof this.allRefs[ref].current.validate === 'function')
+			 return this.allRefs[ref].current.validate() === true
+		});
+    	if(error === false)
+            this.submitForm();
+    }
+
+    submitForm(){
+        let resultstring = '{';
+        Object.keys(this.allRefs).map((ref) => { 
+            resultstring += this.allRefs[ref].current.returnData() + ',';
+        })
+        resultstring = resultstring.slice(0, -1) + '}'
+        //let result = this.allRefs["description"].current.returnData()
+        try{
+            console.log(JSON.parse(resultstring));
+            this.setState({
+                displayForm: false
+            })
+        }
+        catch(error){
+            console.log(resultstring);
+            console.log('erro!' + error)
+            this.setState({
+                submissionError: true
+            })
+        }
+        
     }
 
     render() {
         return (
             <div className="container">
-            	<form>
-            		<fieldset name="About" className="form-section">
-            			<legend>About</legend>
-            			<div className="form-row">
-	            			<input id="title" 
-	            				   type="text" 
-	            				   placeholder="Make it short and clear" 
-	            				   required />
-	            			<label htmlFor="title" 
-	            				   className="row-label">Title</label>
-            			</div>
-            			<div className="form-row">
-            				<div className="flex-item">
-            					<div className="row">
-			            			<textarea id="description" 
-			            					  placeholder="Write about your event, be creative" 
-			            					  maxLength="140" 
-			            					  rows="10"
-			            					  aria-describedby="maxLength"
-			            					  required />
-			            		</div>
-            					<div className="row">
-			            			<span className="info" id="maxLength">Max length 140 characters</span>
-			            			<span className="info" id="charCounter">0/140</span>
-		            			</div>
-	            			</div>
-	            			<label htmlFor="description" 
-	            				   className="row-label">Description</label>
-	            		</div>
-            			<div className="form-row">
-	            			<select id="category" defaultValue="Please select cat">
-	            				<option key={-1} value={null}> Select category (skills, interests, locations) </option>
-	            				
-	            					   { this.state.categories.map((category, i) => {
-		                            return(
-		                                <option key={i} value={category.id}> {category.name} </option>
-		                            )
-		                        })}
-		                    </select>
-	            			<label htmlFor="category" className="row-label">Category</label>
-		                </div>
-	                    <div className="form-row">
-	                    	<fieldset name="payment" className="form-section-inline">
-	                    		<div className="field-set-inline has-legend">
-				                    <input type="radio" 
-				                    		name="payment" 
-				                    		value={0} 
-				                    		id="free"/>
-				                    <label htmlFor="free">Free event</label>
-				                    <input type="radio" 
-				                    		name="payment" 
-				                    		value={1} 
-				                    		id="paid"/>
-				                    <label htmlFor="paid">Paid event</label>
-				                    <input type="number" 
-				                    	   name="paymentValue" 
-				                    	   placeholder="Fee" />
-				                    <label htmlFor="paymentValue" aria-label="fee in dollars">$</label>
-				                </div>
-	                    		<legend>Payment</legend>
-		                    </fieldset>
-	            		</div>
-            			<div className="form-row">
-		            		<input type="number" 
-		            			   name="rewardPoints" 
-		            			   placeholder="Number" 
-		            			   aria-describedby="rewardPointsDescription" />
-	            			<label htmlFor="rewardPoints" className="row-label">Reward</label>
-	            			<span id="rewardPointsDescription" className="info">reward points for attendance</span>
-	            		</div>
-            		</fieldset>
-            		<fieldset name="Coordinator" className="form-section">
-            			<legend>Coordinator</legend>
-            			<div className="form-row">
-	            			<select id="responsible" required>
-	            				<optgroup label="Me">
-	            					{ this.state.loggedInName ?
-		            					<option key={-1} 
-		            							value={this.state.loggedIn}> 
-		            						{ this.state.loggedInName }
-		            					</option> :
-		            					<option key={-1} 
-		            							value={false} 
-		            							disabled > 
-		            						-
-		            					</option>
-		            				}
-	            				</optgroup>
-	            				<optgroup label="Others">
-		            				{ this.state.employes.filter((employee) => {
-		            					return employee.id !== this.state.loggedInId
-		            				}).map((employee, i) => {
-			                            return(
-			                                <option key={i} value={employee.id}> 
-			                                	{employee.name} {employee.lastname}
-			                                </option>
-			                            )
-			                        })}
-		                        </optgroup>
-		                    </select>
-	            			<label htmlFor="responsible" className="row-label">Responsible</label>
-	                    </div>
-            			<div className="form-row">
-		                    <input type="email" 
-		                    	   id="email"
-		                    	   placeholder="Email" />
-		                    <label htmlFor="email" className="row-label">E-mail</label>
-	                    </div>
-            		</fieldset>
-            		<fieldset name="When" className="form-section">
-            			<legend>When</legend>
-            			<div className="form-row">
-	            			<fieldset name="startDate" className="form-section-inline">
-		                    	<div className="field-set-inline">
-				                    <input type="date" 
-				                    	   id="startDate" 
-				                    	   pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}"
-				                    	   required/>
-				                    <label htmlFor="startDate" className="row-label" aria-label="start date">Starts on</label>
-									<label htmlFor="startTime" aria-label="start hour">at</label>
-				                    <input type="time" 
-				                    	   id="startTime"
-				                    	   required/>   
-				                    <input type="radio" 
-				                    	   name="eventTime" 
-				                    	   value="AM" 
-				                    	   id="am"/>
-				                    <label htmlFor="am">AM</label>
-				                    <input type="radio" 
-				                    	   name="eventTime" 
-				                    	   value="PM" 
-				                    	   id="pm"/>
-				                    <label htmlFor="pm">PM</label>
-				                </div>
-				            </fieldset>
-	                    </div>
-            			<div className="form-row">
-		                    <input type="number" 
-		                    	   id="duration" 
-		                    	   placeholder="Number"/>
-							<label htmlFor="duration" className="row-label">Duration</label>
-		                    <span className="info">hour</span>
-		                </div>
-            		</fieldset>
-            		<input type="submit" value="Publish event" />
-            	</form>
+            { this.state.displayForm ? (
+                <form>
+                    <FormSection name="About">
+                        <FormRow name="Title" isRequired={true}>
+                            <FormControl isRequired={true}
+                                         type="text"
+                                         name="title"
+                                         expectedValue="string"
+                                         ariaDescription="Event title"
+                                         errorContent="Title cannot be empty"
+                                         placeholder="Make it short and clear"
+                                         ref={this.createRef("title")} />
+                        </FormRow>
+                        <FormRow name="Description" isRequired={true}>
+                            <TextArea name="description" 
+                                      placeholder="Write about your event, be creative" 
+                                      maxLength="140" 
+                                      rows="10"
+                                      ariaDescription="Max length 140 characters"
+                                      errorContent="Description cannot be empty"
+                                      isRequired={true}
+                                      ref={this.createRef("description")} />                        
+                        </FormRow>
+                        <FormRow name="Category">
+                            <Category name="category_id"
+                                      defaultText="Select category (skills, interests, locations)"
+                                      source={this.state.categories}
+                                      info="describes topic and people who should be interested in this event"
+                                      ref={this.createRef("category_id")} />
+                        </FormRow>
+                        <FormRow name="Payment" isRequired={true}>
+                            <PaymentSection defaultValue={0} 
+                                            ref={this.createRef("payment")} 
+                                            errorContent="Set price if the event is paid" />
+                        </FormRow>
+                        <FormRow name="Reward">
+                            <FormControl type="number"
+                                         name="reward"
+                                         ariaLabel="reward points for attendance"
+                                         placeholder="Number"
+                                         ref={this.createRef("reward")} />
+                        </FormRow>
+                    </FormSection>
+                    <FormSection name="Coordinator" isRequired={true}>
+                        <FormRow name="Responsible">
+                            <Coordinator source={this.state.employees}
+                                         name="coordinator"
+                                         currentUser={this.state.loggedInName}
+                                         currentUserID={this.state.loggedInId}
+                                         ref={this.createRef("coordinator")}
+                                         errorContent="Enter valid email" />
+                        </FormRow>
+                    </FormSection>
+                    <FormSection name="When">
+                        <FormRow name="Starts on" isRequired={true}>
+                            <StartTime ref={this.createRef("startTime")} errorContent="Start time cannot be empty" />
+                        </FormRow>
+                        <FormRow name="Duration">
+                            <Duration ref={this.createRef("duration")} />
+                        </FormRow>
+                    </FormSection>
+                    {this.state.submissionError && <p> Error </p>}
+                    <button value="Publish event" onClick={this.validateForm} type="button"> Publish </button>
+                </form>
+
+              ) : (
+                    <p> Success! </p>
+              )
+
+            }
+            	
             </div>
         );
     }
