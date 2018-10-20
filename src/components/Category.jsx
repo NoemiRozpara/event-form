@@ -25,7 +25,7 @@ export default class Category extends Component {
     render(){
     	return(
     		<div className="row">
-	    		<select id="name" onChange={this.update}>
+	    		<select id="name" onChange={this.update} defaultValue={this.state.value}>
     				<option key={-1} value={-1}> {this.props.defaultText} </option>
 					{ this.props.source.map((category, i) => {
                         return(

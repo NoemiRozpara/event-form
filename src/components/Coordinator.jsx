@@ -9,10 +9,13 @@ export default class Coordinator extends Component {
 		this.state = {
 			value: this.props.currentUserID,
 			email: '',
-			error: false
+			error: false,
+			currentLabel: '',
+			valueToSetLabel: -9
 		}
 		this.setEmail = this.setEmail.bind(this);
 		this.updateEmail = this.updateEmail.bind(this);
+		this.selectElement = React.createRef();
 	}
 
 	componentDidMount(){
@@ -21,20 +24,26 @@ export default class Coordinator extends Component {
 
 	setEmail(event){
 		let id = null;
+		let optgroupName = null;
 		if(typeof event === "undefined"){
 			if(this.props.currentUserID === "undefined"){
 				return ''
 			}
-			else 
-				id = this.props.currentUserID
+			else{
+				id = this.props.currentUserID;
+				optgroupName = 'Me'
+			} 	
 		}
 		else{
-			id = event.target.value
+			id = event.target.value;
+			optgroupName = event.target.getElementsByTagName('option')[event.target.selectedIndex].parentNode.label
 		}
 		let user = this.props.source.find(x => x.id == id);
+		this.selectElement.current.value = -1;
 		this.setState({
 			value: id,
-			email: user.email || ''
+			email: user.email || '',
+			currentLabel: optgroupName + ' - ' + user.name + ' ' + user.lastname
 		})
 	}
 
@@ -62,7 +71,13 @@ export default class Coordinator extends Component {
     	return(
     		<div>
 	    		<div className="row">
-		    		<select name={this.props.name} onChange={this.setEmail}>
+		    		<select name={this.props.name} 
+		    				onChange={this.setEmail} 
+		    				ref={this.selectElement} 
+		    				value={this.state.valueToSetLabel}>
+		    			<option hidden value={-1}>
+		    				{this.state.currentLabel}
+		    			</option>
 						<optgroup label="Me">
 							{ this.props.currentUser ?
 		    					<option key={-1} 
