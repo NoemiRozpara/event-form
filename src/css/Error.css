@@ -1,0 +1,25 @@
+.error{
+	background: #FCB0AF;
+	color: #FFF;
+	margin-left: 15px;
+	width: 185px;
+	position: relative;
+	border-radius: 3px;
+	padding: 3px;
+	height: fit-content;
+}
+
+.error::before{
+	content: '';
+	display: block;
+	width: 0;
+	height: 0;
+	border-top: 8px solid transparent;
+	border-bottom: 8px solid transparent; 
+	border-right:8px solid #FCB0AF; 
+	position: absolute;
+	left: -7px;
+	top: 50%;
+	transform: translateY(-50%);
+	border-radius: 3px;
+}

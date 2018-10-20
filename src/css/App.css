@@ -12,6 +12,20 @@ body{
 	display: flex;
 }
 
+.row-column{
+	flex-direction: column;
+}
+
+.small-info{
+	font-size: 0.7em;
+	color: #666;
+	font-style: italic;
+}
+
+.space-between{
+	justify-content: space-between;
+}
+
 @media(min-width: 768px){
 	.container{
 		max-width: 750px

@@ -16,6 +16,7 @@ export default class TextArea extends Component {
                               true),
             charsCount: 0
         }
+        this.validatedControl = React.createRef();
         this.updateValue = this.updateValue.bind(this);
         this.validate = this.validate.bind(this)
     }
@@ -32,6 +33,8 @@ export default class TextArea extends Component {
         if(this.state.shouldValidate === false ) return false;
 
         if(this.state.isRequired === true && (this.state.currentValue === '' || this.state.currentValue === ' ')){
+            this.validatedControl.current.focus();
+            this.validatedControl.current.scrollIntoView();
             this.setState({
                 error: true
             })
@@ -52,25 +55,30 @@ export default class TextArea extends Component {
     render(){
     	const uniqueKey = Math.random().toString(36).substring(0,5);
     	return(
-            <div className="flex-item-wraper">
+            <div className="row row-column">
                 <div className="row">
-            		<textarea type={this.props.type} 
-                           defaultValue={this.props.value || ''} 
-                           name={this.props.name} 
-                           id={"input" + uniqueKey} 
-                           placeholder={this.props.placeholder || ''} 
-                           onChange={this.updateValue}
-                           maxLength={this.props.maxLength || ''}
-                           rows={this.props.rows || ''} />
-           			<label htmlFor={"input" + uniqueKey} 
-                           title={this.props.name}
-                           className="input-label">
-                    </label>
+                    <div className="item-wrapper-80">
+                		<textarea type={this.props.type} 
+                               defaultValue={this.props.value || ''} 
+                               name={this.props.name} 
+                               id={"input" + uniqueKey} 
+                               placeholder={this.props.placeholder || ''} 
+                               onChange={this.updateValue}
+                               maxLength={this.props.maxLength || ''}
+                               rows={this.props.rows || ''}
+                               ref={this.validatedControl} />
+               			<label htmlFor={"input" + uniqueKey} 
+                               title={this.props.name}
+                               className="input-label">
+                        </label>
+                    </div>
                     { this.state.error && <ErrorPopup errorContent={this.props.errorContent} /> }
                 </div>
                 <div className="row">
-                    <span className="small-info">{this.props.ariaDescription} </span>
-                    <span className="small-info">{this.state.charsCount} / {this.props.maxLength} </span>
+                    <div className="item-wrapper-80 space-between">
+                        <span className="small-info">{this.props.ariaDescription} </span>
+                        <span className="small-info">{this.state.charsCount} / {this.props.maxLength} </span>
+                    </div>
                 </div>
 	    	</div>
     	)

@@ -30,7 +30,7 @@ export default class EventApp extends Component {
     render() {
         return (
             <div className="container-fluid">
-                <Header />
+                <Header title="New event" />
                 <EventForm apiUrl={this.props.apiUrl} />
             </div>
         );

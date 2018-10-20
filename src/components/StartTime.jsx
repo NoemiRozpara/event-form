@@ -67,30 +67,36 @@ export default class StartTime extends Component {
 
     render(){
     	return(
-            <div className="flex-item-wraper">
-                <FormControl type="date"
-                             name="startDate"
-                             ariaDescription="Start date" 
-                             isRequired={true}
-                             onChange={this.update}
-                             min={this.startingDate} />
-                <FormControl type="time"
-                             name="startTime"
-                             ariaDescription="Start time" 
-                             isRequired={true}
-                             onChange={this.checkTimeValue}
-                             max="12:00" />
-                <FormControl type="radio"
-                             name="ampm"
-                             ariaLabel="AM" 
-                             value="1"
-                             defaultChecked={true}
-                             onChange={this.update} />
-                <FormControl type="radio"
-                             name="ampm"
-                             ariaLabel="PM" 
-                             value="2"
-                             onChange={this.update}/>
+            <div className="row">
+                <div className="item-wrapper-80 unset-inner-rows">
+                    <FormControl type="date"
+                                 name="startDate"
+                                 ariaDescription="Start date" 
+                                 isRequired={true}
+                                 onChange={this.update}
+                                 min={this.startingDate}
+                                 fullWidth={true} />
+                    <FormControl type="time"
+                                 name="startTime"
+                                 ariaDescription="Start time" 
+                                 isRequired={true}
+                                 onChange={this.checkTimeValue}
+                                 max="12:00" 
+                                 fullWidth={true}/>
+                    <FormControl type="radio"
+                                 name="ampm"
+                                 ariaLabel="AM" 
+                                 value="1"
+                                 defaultChecked={true}
+                                 onChange={this.update} 
+                                 fullWidth={true}/>
+                    <FormControl type="radio"
+                                 name="ampm"
+                                 ariaLabel="PM" 
+                                 value="2"
+                                 onChange={this.update}
+                                 fullWidth={true}/>
+                </div>
                 { this.state.error && <ErrorPopup errorContent={this.props.errorContent} /> }
 	    	</div>
     	)

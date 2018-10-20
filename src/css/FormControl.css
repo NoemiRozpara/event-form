@@ -3,3 +3,16 @@
 	display: flex;
 	width: 100%;
 }
+
+.item-wrapper-80{
+	min-width: calc(100% - 200px);
+	max-width: calc(100% - 200px);
+	display: flex;
+}
+
+.unset-inner-rows .item-wrapper-80{
+	min-width: unset;
+	max-width: unset;
+	display: block;
+	flex-shrink: 1
+}

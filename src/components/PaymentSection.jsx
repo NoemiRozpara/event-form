@@ -11,12 +11,14 @@ export default class PaymentSection extends Component {
             event_fee: 0,
             error: false
         }
+        this.validatedControl = React.createRef();
         this.validate = this.validate.bind(this)
         this.update = this.update.bind(this)
     }
 
     validate(){
         if(this.state.paid_event && (['', 0, null, undefined].includes(this.state.event_fee) || this.state.event_fee <= 0.01)){
+            this.validatedControl.current._focus();
             this.setState({
                 error: true
             })
@@ -45,28 +47,31 @@ export default class PaymentSection extends Component {
 
     render(){
     	return(
-            <div className="flex-item-wraper">
-	            <FormControl type="radio"
-						     name="paid_event"
-						     value={false}
-						     ariaLabel="Free event"
-						     defaultChecked={this.props.defaultValue == "0" ? true : false} 
-						     onChange={this.update}/>
-				<FormControl type="radio"
-						     name="paid_event"
-						     value={true}
-						     ariaLabel="Paid event"
-						     defaultChecked={this.props.defaultValue == "1" ? true : false}
-						     onChange={this.update}/>
-				{ this.state.paid_event &&
-					<FormControl type="number"
-						     name="event_fee"
-						     ariaDescription="Fee in dollars"
-						     ariaLabel="$"
-						     placeholder="Number"
-						     onChange={this.update} />
-				}
-				{ this.state.error && <ErrorPopup errorContent={this.props.errorContent} /> }
+            <div className="row">
+                <div className="item-wrapper-80">
+    	            <FormControl type="radio"
+    						     name="paid_event"
+    						     value={false}
+    						     ariaLabel="Free event"
+    						     defaultChecked={this.props.defaultValue == "0" ? true : false} 
+    						     onChange={this.update}/>
+    				<FormControl type="radio"
+    						     name="paid_event"
+    						     value={true}
+    						     ariaLabel="Paid event"
+    						     defaultChecked={this.props.defaultValue == "1" ? true : false}
+    						     onChange={this.update}/>
+    				{ this.state.paid_event &&
+    					<FormControl type="number"
+    						     name="event_fee"
+    						     ariaDescription="Fee in dollars"
+    						     ariaLabel="$"
+    						     placeholder="Fee"
+    						     onChange={this.update}
+                                 ref={this.validatedControl} />
+    				}
+                </div>
+    			{ this.state.error && <ErrorPopup errorContent={this.props.errorContent} /> }
 	    	</div>
     	)
     }

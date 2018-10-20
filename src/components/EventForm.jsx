@@ -75,8 +75,11 @@ export default class EventForm extends Component {
 
     validateForm(){
     	let error = Object.keys(this.allRefs).some((ref) => { 
-            if(typeof this.allRefs[ref].current.validate === 'function')
-			 return this.allRefs[ref].current.validate() === true
+            if(typeof this.allRefs[ref].current.validate === 'function'){
+                 console.log(this.allRefs[ref].current)
+
+			     return this.allRefs[ref].current.validate() === true
+            }
 		});
     	if(error === false)
             this.submitForm();
@@ -151,15 +154,13 @@ export default class EventForm extends Component {
                                          ref={this.createRef("reward")} />
                         </FormRow>
                     </FormSection>
-                    <FormSection name="Coordinator" isRequired={true}>
-                        <FormRow name="Responsible">
-                            <Coordinator source={this.state.employees}
-                                         name="coordinator"
-                                         currentUser={this.state.loggedInName}
-                                         currentUserID={this.state.loggedInId}
-                                         ref={this.createRef("coordinator")}
-                                         errorContent="Enter valid email" />
-                        </FormRow>
+                    <FormSection name="Coordinator">
+                        <Coordinator source={this.state.employees}
+                                     name="coordinator"
+                                     currentUser={this.state.loggedInName}
+                                     currentUserID={this.state.loggedInId}
+                                     ref={this.createRef("coordinator")}
+                                     errorContent="Enter valid email" />
                     </FormSection>
                     <FormSection name="When">
                         <FormRow name="Starts on" isRequired={true}>

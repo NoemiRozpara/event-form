@@ -1,5 +1,11 @@
 header{
 	background-color: #325387;
-	border-top: 10px solid #1E3B68;
+	border-top: 20px solid #1E3B68;
 	color: #FFF;
+}
+
+.page-title{
+	font-weight: 300;
+	margin: 0;
+	padding: 20px 50px;
 }

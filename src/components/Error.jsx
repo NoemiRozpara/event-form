@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import '../css/Error.css'
 
 export default class ErrorPopup extends Component {
 
