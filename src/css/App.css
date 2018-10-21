@@ -1,15 +1,21 @@
 body{
-	background-color: #F7F7F7
+	background-color: #F7F7F7;
+	font-size: 16px;
 }
 
 .container{
 	margin: 0 auto;
 }
 
+#main{
+	padding-top: 30px;
+}
+
 .row{
 	width: 100%;
 	clear: both;
 	display: flex;
+	align-items: baseline;
 }
 
 .row-column{
@@ -18,7 +24,7 @@ body{
 
 .small-info{
 	font-size: 0.7em;
-	color: #666;
+	color: #E4E3E3;
 	font-style: italic;
 }
 

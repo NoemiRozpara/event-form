@@ -49,7 +49,9 @@ export default class TextArea extends Component {
     }
 
     returnData(){
-        return '"description": "' + this.state.currentValue + '"'
+        let value = this.state.currentValue.replace("'", "/'").replace('"', '/"').replace(":", "/:");
+        let result = {description: value}
+        return result;
     }
 
     render(){

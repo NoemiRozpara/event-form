@@ -25,7 +25,7 @@ export default class Duration extends Component {
 
     returnData(){
 
-        return '"duration": ' + this.state.duration * 3600
+        return {duration: (this.state.duration * 3600)}
     }
 
     render(){

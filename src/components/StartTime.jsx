@@ -62,40 +62,52 @@ export default class StartTime extends Component {
     returnData(){
         let hour = this.state.startTime.split(':');
         let hourMilitary = hour[0] * this.state.ampm + ':' + hour[1];
-        return '"date": "' + this.state.startDate + 'T' + hourMilitary + '"'
+        return { date: (this.state.startDate + 'T' + hourMilitary) }
     }
 
     render(){
+        const uniqueKey = Math.random().toString(36).substring(0, 5);
     	return(
             <div className="row">
                 <div className="item-wrapper-80 unset-inner-rows">
-                    <FormControl type="date"
-                                 name="startDate"
-                                 ariaDescription="Start date" 
-                                 isRequired={true}
-                                 onChange={this.update}
-                                 min={this.startingDate}
-                                 fullWidth={true} />
-                    <FormControl type="time"
-                                 name="startTime"
-                                 ariaDescription="Start time" 
-                                 isRequired={true}
-                                 onChange={this.checkTimeValue}
-                                 max="12:00" 
-                                 fullWidth={true}/>
-                    <FormControl type="radio"
-                                 name="ampm"
-                                 ariaLabel="AM" 
-                                 value="1"
-                                 defaultChecked={true}
-                                 onChange={this.update} 
-                                 fullWidth={true}/>
-                    <FormControl type="radio"
-                                 name="ampm"
-                                 ariaLabel="PM" 
-                                 value="2"
-                                 onChange={this.update}
-                                 fullWidth={true}/>
+                    <input type="date"
+                           name="startDate"
+                           id = { "input" + uniqueKey + 1}
+                           onChange = {this.update}
+                           min={this.startingDate} />
+                    <label htmlFor={"input" + uniqueKey + 1} 
+                           title="Start date"
+                           className="input-label" />
+                    <span>at</span>
+                    <input type="time"
+                           name="startTime"
+                           id = { "input" + uniqueKey + 2}
+                           onChange = {this.checkTimeValue} 
+                           defaultChecked/>
+                    <label htmlFor={"input" + uniqueKey + 2} 
+                           title="Start time"
+                           className="input-label" />
+                    <input type="radio"
+                           name="ampm"
+                           value={1}
+                           id = { "input" + uniqueKey + 3}
+                           onChange = {this.update}  />
+                    <label htmlFor={"input" + uniqueKey + 3} 
+                           title="Hour AM"
+                           className="input-label">
+                        AM
+                    </label>
+                    <input type="radio"
+                           name="ampm"
+                           value={2}
+                           id = { "input" + uniqueKey + 4}
+                           onChange = {this.update} 
+                           defaultChecked />
+                    <label htmlFor={"input" + uniqueKey + 4} 
+                           title="Hour PM"
+                           className="input-label">
+                        PM
+                    </label>
                 </div>
                 { this.state.error && <ErrorPopup errorContent={this.props.errorContent} /> }
 	    	</div>

@@ -4,7 +4,7 @@ import ErrorPopup from './Error'
 
 export default class PaymentSection extends Component {
 
-    constructor(props, context){
+    constructor(props, context) {
         super(props, context);
         this.state = {
             paid_event: false,
@@ -16,63 +16,88 @@ export default class PaymentSection extends Component {
         this.update = this.update.bind(this)
     }
 
-    validate(){
-        if(this.state.paid_event && (['', 0, null, undefined].includes(this.state.event_fee) || this.state.event_fee <= 0.01)){
-            this.validatedControl.current._focus();
+    validate() {
+
+        console.log(typeof this.state.paid_event);
+        if (this.state.paid_event  && (['', 0, null, undefined].includes(this.state.event_fee) || this.state.event_fee <= 0.01)) {
+            this.validatedControl.current.focus();
+            this.validatedControl.current.scrollIntoView();
             this.setState({
                 error: true
             })
-            return(true)
-        }
-        else{
+            return (true)
+        } else {
             this.setState({
                 error: false
             })
-            return(false)
+            return (false)
         }
     }
 
-    update(event){
-    	let disableError = (event.target.name === "paid_event" && event.target.value === false) ? 'error:false' : '';
+    update(event) {
+        let currentValue,
+            errorValue;
+        if(event.target.name === "paid_event") {
+          currentValue = (event.target.value === "true");
+          errorValue = false
+        } else {
+          currentValue = event.target.value
+        }
         this.setState({
-            [event.target.name]: event.target.value,
-            disableError
+            [event.target.name]: currentValue,
+            error: errorValue
         })
     }
 
-    returnData(){
-        return '"paid_event": ' + this.state.paid_event +
-               ',"event_fee": ' + this.state.event_fee 
+    returnData() {
+
+        let paid_event = {paid_event: this.state.paid_event, 
+                          event_fee: this.state.event_fee }
+        return {...paid_event}
     }
 
-    render(){
-    	return(
+    render() {
+        const uniqueKey = Math.random().toString(36).substring(0, 5);
+        return (
             <div className="row">
                 <div className="item-wrapper-80">
-    	            <FormControl type="radio"
-    						     name="paid_event"
-    						     value={false}
-    						     ariaLabel="Free event"
-    						     defaultChecked={this.props.defaultValue == "0" ? true : false} 
-    						     onChange={this.update}/>
-    				<FormControl type="radio"
-    						     name="paid_event"
-    						     value={true}
-    						     ariaLabel="Paid event"
-    						     defaultChecked={this.props.defaultValue == "1" ? true : false}
-    						     onChange={this.update}/>
-    				{ this.state.paid_event &&
-    					<FormControl type="number"
-    						     name="event_fee"
-    						     ariaDescription="Fee in dollars"
-    						     ariaLabel="$"
-    						     placeholder="Fee"
-    						     onChange={this.update}
-                                 ref={this.validatedControl} />
-    				}
+                    <input type="radio"
+                           name="paid_event"
+                           value={false}
+                           id = { "input" + uniqueKey + 1}
+                           onChange = {this.update}
+                           defaultChecked />
+                    <label htmlFor={"input" + uniqueKey + 1} 
+                           className="input-label">
+                        Free event 
+                    </label>
+                    <input type="radio"
+                           name="paid_event"
+                           value={true}
+                           id = { "input" + uniqueKey + 2}
+                           onChange = {this.update} />
+                    <label htmlFor={"input" + uniqueKey + 2} 
+                           className="input-label">
+                        Paid event 
+                    </label>
+                    { this.state.paid_event &&
+                    <div>
+                        <input type="number"
+                               name="event_fee"
+                               placeholder="Fee"
+                               onChange={this.update}
+                               id = { "input" + uniqueKey + 3}
+                               ref={this.validatedControl} />
+                        <label htmlFor={"input" + uniqueKey + 3} 
+                               className="input-label"
+                               title="Fee in dollars">
+                            $
+                        </label>
+                    </div>
+                    }
                 </div>
-    			{ this.state.error && <ErrorPopup errorContent={this.props.errorContent} /> }
-	    	</div>
-    	)
+                { this.state.error && <ErrorPopup errorContent={this.props.errorContent} /> }
+            </div>
+        )
     }
 }

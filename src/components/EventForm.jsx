@@ -12,6 +12,7 @@ import StartTime from './StartTime'
 import Coordinator from './Coordinator'
 import Category from './Category'
 import Duration from './Duration'
+import InfoFrame from './InfoFrame'
 
 export default class EventForm extends Component {
 
@@ -76,9 +77,7 @@ export default class EventForm extends Component {
     validateForm(){
     	let error = Object.keys(this.allRefs).some((ref) => { 
             if(typeof this.allRefs[ref].current.validate === 'function'){
-                 console.log(this.allRefs[ref].current)
-
-			     return this.allRefs[ref].current.validate() === true
+                 return this.allRefs[ref].current.validate() === true
             }
 		});
     	if(error === false)
@@ -86,31 +85,31 @@ export default class EventForm extends Component {
     }
 
     submitForm(){
-        let resultstring = '{';
-        Object.keys(this.allRefs).map((ref) => { 
-            resultstring += this.allRefs[ref].current.returnData() + ',';
+        let resultArray = {};
+        Object.keys(this.allRefs).map((ref, i) => { 
+            let result = this.allRefs[ref].current.returnData();
+            Object.keys(result).map(function(key, index) {
+                let keyName = '"' + key + '"';
+               resultArray[keyName] = result[key]
+            });
         })
-        resultstring = resultstring.slice(0, -1) + '}'
-        //let result = this.allRefs["description"].current.returnData()
         try{
-            console.log(JSON.parse(resultstring));
+            console.log({...resultArray});
             this.setState({
                 displayForm: false
             })
         }
         catch(error){
-            console.log(resultstring);
             console.log('erro!' + error)
             this.setState({
                 submissionError: true
             })
         }
-        
     }
 
     render() {
         return (
-            <div className="container">
+            <div className="container" id="main">
             { this.state.displayForm ? (
                 <form>
                     <FormSection name="About">
@@ -122,7 +121,8 @@ export default class EventForm extends Component {
                                          ariaDescription="Event title"
                                          errorContent="Title cannot be empty"
                                          placeholder="Make it short and clear"
-                                         ref={this.createRef("title")} />
+                                         ref={this.createRef("title")}
+                                          />
                         </FormRow>
                         <FormRow name="Description" isRequired={true}>
                             <TextArea name="description" 
@@ -136,7 +136,7 @@ export default class EventForm extends Component {
                         </FormRow>
                         <FormRow name="Category">
                             <Category name="category_id"
-                                      defaultText="Select category (skills, interests, locations)"
+                                      defaultText="Select category"
                                       source={this.state.categories}
                                       info="describes topic and people who should be interested in this event"
                                       ref={this.createRef("category_id")} />
@@ -164,18 +164,24 @@ export default class EventForm extends Component {
                     </FormSection>
                     <FormSection name="When">
                         <FormRow name="Starts on" isRequired={true}>
-                            <StartTime ref={this.createRef("startTime")} errorContent="Start time cannot be empty" />
+                            <StartTime errorContent="Start time cannot be empty" 
+                                       ref={this.createRef("startTime")} />
                         </FormRow>
                         <FormRow name="Duration">
                             <Duration ref={this.createRef("duration")} />
                         </FormRow>
                     </FormSection>
-                    {this.state.submissionError && <p> Error </p>}
-                    <button value="Publish event" onClick={this.validateForm} type="button"> Publish </button>
+                    {this.state.submissionError && 
+                        <InfoFrame className="info-error"
+                                   title="Oops!"
+                                   description="Something went wrong, try again later." />}
+                    <button value="Publish event" onClick={this.validateForm} type="button" id="submit"> Publish event </button>
                 </form>
 
               ) : (
-                    <p> Success! </p>
+                    <InfoFrame className="success"
+                               title="Success"
+                               description="Event has been created." />
               )
 
             }

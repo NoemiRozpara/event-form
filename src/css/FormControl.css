@@ -8,6 +8,8 @@
 	min-width: calc(100% - 200px);
 	max-width: calc(100% - 200px);
 	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
 }
 
 .unset-inner-rows .item-wrapper-80{
@@ -15,4 +17,16 @@
 	max-width: unset;
 	display: block;
 	flex-shrink: 1
+}
+
+.item-wrapper-80 input, .item-wrapper-80 textarea, .item-wrapper-80 select{
+	margin: 0 5px !important;
+}
+
+.item-wrapper-80:first-child{
+	margin-left: 0 !important
+}
+
+.item-wrapper-80:last-child{
+	margin-right: 0 !important
 }

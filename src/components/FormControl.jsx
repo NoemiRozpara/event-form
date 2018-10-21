@@ -8,7 +8,7 @@ export default class FormControl extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            currentValue: this.props.defaultValue || '',
+            currentValue: this.props.defaultValue || 0,
             isRequired: (typeof this.props.isRequired !== 'undefined' ? this.props.isRequired : false),
             error: false,
             shouldValidate: ((typeof this.props.expectedValue === 'undefined' &&
@@ -35,7 +35,7 @@ export default class FormControl extends Component {
 
         if (this.state.shouldValidate === false) return false;
 
-        if ((this.state.isRequired === true && (this.state.currentValue === '' || this.state.currentValue === ' ')) ||
+        if ((this.state.isRequired === true && (this.state.currentValue === 0 || this.state.currentValue === ' ')) ||
             (this.state.currentValue !== '' && typeof this.state.currentValue !== this.props.expectedValue)) {
             this._focus();
             this.setState({
@@ -51,10 +51,8 @@ export default class FormControl extends Component {
     }
 
     returnData() {
-        if (this.props.expectedValue === "string")
-            return '"' + this.props.name + '":"' + this.state.currentValue + '"'
-        else
-            return '"' + this.props.name + '":' + this.state.currentValue
+        let key = this.props.name;
+        return {[key]: this.state.currentValue}
     }
 
     render() {

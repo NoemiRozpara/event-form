@@ -67,8 +67,10 @@ export default class Coordinator extends Component {
     }
 
     returnData() {
-        return '"coordinator":{"email":"' + this.state.email +
-            '","id": "' + this.state.value + '"}'
+        return {coordinator: {
+                    email: this.state.email,
+                    id: this.state.value
+                }}
     }
 
     render() {

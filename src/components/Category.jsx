@@ -14,12 +14,12 @@ export default class Category extends Component {
 
 	update(event){
 		this.setState({
-			category: event.target.value
+			value: event.target.value
 		})
 	}
 
 	returnData(){
-        return '"category_id": ' + this.state.value
+        return {category_id: this.state.value}
     }
 
     render(){
