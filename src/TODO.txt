@@ -1,3 +1,2 @@
-stringi z pliku PO
-scss transpilacja
-różne błędy
+index.html do src
+przemyslec kontrolki
