@@ -77,7 +77,7 @@ export default class Coordinator extends Component {
         return (
             <div>
 	    			<FormRow name="Responsible" isRequired={true}>
-                        <div className="item-wrapper-80">
+                        <div className="row-items-wrapper">
     			    		<select name={this.props.name} 
     			    				onChange={this.setEmail} 
     			    				ref={this.selectElement} 
@@ -113,7 +113,7 @@ export default class Coordinator extends Component {
                         </div>
 			        </FormRow>
 			        <FormRow name="Email">
-                        <div className="item-wrapper-80">
+                        <div className="row-items-wrapper">
 		    			<input type="text" 
                                value={this.state.email} 
                                onChange={this.updateEmail} 

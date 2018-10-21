@@ -1,6 +1,8 @@
+@import 'variables';
+
 header{
-	background-color: #325387;
-	border-top: 15px solid #1E3B68;
+	background-color: $blue;
+	border-top: 15px solid $dark-blue;
 	color: #FFF;
 }
 

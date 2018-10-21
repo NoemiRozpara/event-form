@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ErrorPopup from './Error'
-import '../css/FormControl.css'
 
 export default class FormControl extends Component {
 

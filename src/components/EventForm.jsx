@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import categories from '../data/categories.json'
 import employees from '../data/employes.json'
-import '../css/EventForm.css'
 import FormSection from './FormSection'
 import FormRow from './FormRow'
 import FormControl from './FormControl'
@@ -13,6 +12,8 @@ import Coordinator from './Coordinator'
 import Category from './Category'
 import Duration from './Duration'
 import InfoFrame from './InfoFrame'
+
+import '../css/EventForm.scss'
 
 export default class EventForm extends Component {
 

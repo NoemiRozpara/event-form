@@ -1,0 +1,23 @@
+$background-color: #F7F7F7;
+$accent-color: #FCB0AF;
+$light-gray: #E4E3E3;
+$dark-gray: #787878;
+$blue: #A1B2CD;
+$dark-blue: #1E3B68;
+$orange: #FB8E1D;
+
+@mixin radiated-border($value){
+	-webkit-border-radius: $value;
+	-moz-border-radius: $value;
+	border-radius: $value;
+}
+
+@mixin box-shadow($value){
+	-webkit-box-shadow: $value;
+	-moz-box-shadow: $value;
+	box-shadow: $value;
+}
+
+%accent-color{
+	color: $accent-color
+}

@@ -59,7 +59,7 @@ export default class TextArea extends Component {
     	return(
             <div className="row row-column">
                 <div className="row">
-                    <div className="item-wrapper-80">
+                    <div className="row-items-wrapper">
                 		<textarea type={this.props.type} 
                                defaultValue={this.props.value || ''} 
                                name={this.props.name} 
@@ -77,7 +77,7 @@ export default class TextArea extends Component {
                     { this.state.error && <ErrorPopup errorContent={this.props.errorContent} /> }
                 </div>
                 <div className="row">
-                    <div className="item-wrapper-80 space-between">
+                    <div className="row-items-wrapper space-between">
                         <span className="small-info">{this.props.ariaDescription} </span>
                         <span className="small-info">{this.state.charsCount} / {this.props.maxLength} </span>
                     </div>

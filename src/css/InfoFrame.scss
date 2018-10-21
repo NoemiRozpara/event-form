@@ -1,0 +1,30 @@
+@import 'variables';
+
+.info{
+	width: 80%;
+	margin: 20px auto;
+	padding: 20px 50px;
+	color: #000;
+	font-style: normal;
+	@include box-shadow(0px 0px 5px 0px rgba(150,150,150,0.3));
+
+	.title{
+		font-weight: 100;
+	}
+}
+
+.info.success{
+	background-color: #F0FCF3;
+
+	.title{
+		color: #70BF75
+	}
+}
+
+.info.info-error{
+	background-color: #FCF0F0;
+
+	.title{
+		color: #BF7070
+	}
+}

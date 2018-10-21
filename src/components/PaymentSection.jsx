@@ -60,7 +60,7 @@ export default class PaymentSection extends Component {
         const uniqueKey = Math.random().toString(36).substring(0, 5);
         return (
             <div className="row">
-                <div className="item-wrapper-80">
+                <div className="row-items-wrapper">
                     <input type="radio"
                            name="paid_event"
                            value={false}

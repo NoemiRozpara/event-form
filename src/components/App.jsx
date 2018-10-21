@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Header from './Header'
 import EventForm from './EventForm'
-import '../css/App.css'
+import '../css/App.scss'
 
 export default class EventApp extends Component {
 

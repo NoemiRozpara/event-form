@@ -25,7 +25,7 @@ export default class Category extends Component {
     render(){
     	return(
     		<div className="row row-column">
-    			<div className="item-wrapper-80">
+    			<div className="row-items-wrapper">
 			    		<select id="name" onChange={this.update} defaultValue={this.state.value}>
 		    				<option key={-1} value={-1}> {this.props.defaultText} </option>
 							{ this.props.source.map((category, i) => {
@@ -35,7 +35,7 @@ export default class Category extends Component {
 		                    })}
 		                </select>
 		            </div>
-		            <div className="item-wrapper-80">
+		            <div className="row-items-wrapper">
 	                	<span className="small-info"> {this.props.info} </span>
 	                </div>
 	    	</div>

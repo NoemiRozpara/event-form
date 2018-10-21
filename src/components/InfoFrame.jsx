@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import '../css/InfoFrame.css'
+import '../css/InfoFrame.scss'
 
 export default class InfoFrame extends Component {
 

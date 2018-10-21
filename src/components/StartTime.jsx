@@ -69,7 +69,7 @@ export default class StartTime extends Component {
         const uniqueKey = Math.random().toString(36).substring(0, 5);
     	return(
             <div className="row">
-                <div className="item-wrapper-80 unset-inner-rows">
+                <div className="row-items-wrapper unset-inner-rows">
                     <input type="date"
                            name="startDate"
                            id = { "input" + uniqueKey + 1}

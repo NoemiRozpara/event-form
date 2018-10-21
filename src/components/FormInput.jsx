@@ -71,7 +71,7 @@ export default class FormControl extends Component {
         } = this.props
         return (
           <div className="row">
-            <div className="item-wrapper-80">
+            <div className="row-items-wrapper">
               <input defaultValue={value || ''} 
                      id = { "input" + uniqueKey }
                      onChange = { typeof onChange === 'undefined' ? this.updateValue : onChange } 
