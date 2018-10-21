@@ -51,7 +51,9 @@ export default class FormControl extends Component {
 
     returnData() {
         let key = this.props.name;
-        return {[key]: this.state.currentValue}
+        let value = this.props.type === 'number' ? parseInt(this.state.currentValue) : this.state.currentValue;
+        console.log(this.props.type);
+        return {[key]: value}
     }
 
     render() {
@@ -68,7 +70,7 @@ export default class FormControl extends Component {
         } = this.props
         return (
           <div className="row">
-            <div className="item-wrapper-80">
+            <div className="row-items-wrapper">
               <input defaultValue={value || ''} 
                      id = { "input" + uniqueKey }
                      onChange = { typeof onChange === 'undefined' ? this.updateValue : onChange } 

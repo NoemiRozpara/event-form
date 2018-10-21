@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ErrorPopup from './Error'
 import FormRow from './FormRow'
+import translation from '../data/messages-en.json'
 
 export default class Coordinator extends Component {
 
@@ -29,7 +30,7 @@ export default class Coordinator extends Component {
         let optgroupName = null;
         if (typeof event === "undefined") {
             if (this.props.currentUserID === "undefined") {
-                return ''
+                return;
             } else {
                 id = this.props.currentUserID;
                 optgroupName = 'Me'
@@ -38,6 +39,7 @@ export default class Coordinator extends Component {
             id = event.target.value;
             optgroupName = event.target.getElementsByTagName('option')[event.target.selectedIndex].parentNode.label
         }
+        // eslint-disable-next-line
         let user = this.props.source.find(x => x.id == id);
         this.selectElement.current.value = -1;
         this.setState({
@@ -76,7 +78,7 @@ export default class Coordinator extends Component {
     render() {
         return (
             <div>
-	    			<FormRow name="Responsible" isRequired={true}>
+	    			<FormRow name={translation.responsible_name} isRequired={true}>
                         <div className="row-items-wrapper">
     			    		<select name={this.props.name} 
     			    				onChange={this.setEmail} 
@@ -85,7 +87,7 @@ export default class Coordinator extends Component {
     			    			<option hidden value={-1}>
     			    				{this.state.currentLabel}
     			    			</option>
-    							<optgroup label="Me">
+    							<optgroup label={translation.me.charAt(0).toUpperCase() + translation.me.slice(1)}>
     								{ this.props.currentUser ?
     			    					<option key={-1} 
     			    							value={this.props.currentUserID}> 
@@ -98,7 +100,7 @@ export default class Coordinator extends Component {
     			    					</option>
     			    				}
     							</optgroup>
-    							<optgroup label="Others">
+    							<optgroup label={translation.others.charAt(0).toUpperCase() + translation.others.slice(1)}>
     			    				{ this.props.source.filter((employee) => {
     			    					return employee.id !== this.props.currentUserID
     			    				}).map((employee, i) => {
@@ -112,12 +114,12 @@ export default class Coordinator extends Component {
     			            </select>
                         </div>
 			        </FormRow>
-			        <FormRow name="Email">
+			        <FormRow name={translation.email}>
                         <div className="row-items-wrapper">
 		    			<input type="text" 
                                value={this.state.email} 
                                onChange={this.updateEmail} 
-                               placeholder="Email"
+                               placeholder={translation.email}
                                ref={this.validatedControl} />
                         </div>
 		    			{ this.state.error && <ErrorPopup errorContent={this.props.errorContent} /> }
@@ -128,6 +130,5 @@ export default class Coordinator extends Component {
 }
 
 Coordinator.propTypes = {
-    name: PropTypes.string.isRequired,
     source: PropTypes.array.isRequired
 }

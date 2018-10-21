@@ -13,6 +13,8 @@ import Category from './Category'
 import Duration from './Duration'
 import InfoFrame from './InfoFrame'
 
+import translation from '../data/messages-en.json'
+
 import '../css/EventForm.scss'
 
 export default class EventForm extends Component {
@@ -24,7 +26,6 @@ export default class EventForm extends Component {
             employees: [],
             errorOccured: false,
             loading: true,
-            loggedInId: 3,
             loggedInName: ''
         }
 
@@ -59,15 +60,15 @@ export default class EventForm extends Component {
             })
             console.log(error);
        });*/
-       let loggedInUser = employees.find(x => x.id === this.state.loggedInId);
+      let loggedInUser = employees.find(x => x.id === this.props.loggedInId);
     	this.setState({ 
-			loading: false,
-			categories: categories,
-			employees: employees,
-			loggedInName: loggedInUser !== undefined ? (loggedInUser.name + ' ' + loggedInUser.lastname) : false,
-            displayForm: true,
-            submissionError: false
-		})
+  			loading: false,
+  			categories: categories,
+  			employees: employees,
+  			loggedInName: loggedInUser !== undefined ? (loggedInUser.name + ' ' + loggedInUser.lastname) : false,
+        displayForm: true,
+        submissionError: false
+  		})
     }
 
     createRef(name){
@@ -114,58 +115,55 @@ export default class EventForm extends Component {
             { this.state.displayForm ? (
                 <form>
                     <FormSection name="About">
-                        <FormRow name="Title" isRequired={true}>
+                        <FormRow name={translation.title_name} isRequired={true}>
                             <FormControl isRequired={true}
                                          type="text"
                                          name="title"
                                          expectedValue="string"
-                                         ariaDescription="Event title"
-                                         errorContent="Title cannot be empty"
-                                         placeholder="Make it short and clear"
+                                         ariaDescription={translation.title_label}
+                                         errorContent={translation.title_name + ' ' + translation.empty_error}
+                                         placeholder={translation.title_placeholder}
                                          ref={this.createRef("title")}
                                           />
                         </FormRow>
-                        <FormRow name="Description" isRequired={true}>
-                            <TextArea name="description" 
-                                      placeholder="Write about your event, be creative" 
+                        <FormRow name={translation.description_name} isRequired={true}>
+                            <TextArea placeholder={translation.description_placeholder}
                                       maxLength="140" 
                                       rows="10"
-                                      ariaDescription="Max length 140 characters"
-                                      errorContent="Description cannot be empty"
+                                      ariaDescription={translation.description_length}
+                                      errorContent={translation.description_name + ' ' + translation.empty_error}
                                       isRequired={true}
                                       ref={this.createRef("description")} />                        
                         </FormRow>
-                        <FormRow name="Category">
-                            <Category name="category_id"
-                                      defaultText="Select category"
+                        <FormRow name={translation.category_name}>
+                            <Category defaultText={translation.select_category}
                                       source={this.state.categories}
-                                      info="describes topic and people who should be interested in this event"
+                                      info={translation.category_info}
                                       ref={this.createRef("category_id")} />
                         </FormRow>
-                        <FormRow name="Payment" isRequired={true}>
+                        <FormRow name={translation.payment_name} isRequired={true}>
                             <PaymentSection defaultValue={0} 
                                             ref={this.createRef("payment")} 
-                                            errorContent="Set price if the event is paid" />
+                                            errorContent={translation.price_error} />
                         </FormRow>
-                        <FormRow name="Reward">
+                        <FormRow name={translation.reward_name}>
                             <FormControl type="number"
                                          name="reward"
-                                         ariaLabel="reward points for attendance"
+                                         ariaLabel={translation.reward_info}
                                          placeholder="Number"
                                          ref={this.createRef("reward")} />
                         </FormRow>
                     </FormSection>
-                    <FormSection name="Coordinator">
+                    <FormSection name={translation.coordinator_name}>
                         <Coordinator source={this.state.employees}
-                                     name="coordinator"
                                      currentUser={this.state.loggedInName}
-                                     currentUserID={this.state.loggedInId}
+                                     currentUserID={this.props.loggedInId}
                                      ref={this.createRef("coordinator")}
-                                     errorContent="Enter valid email" />
+                                     errorContent={translation.invalid_error + ' ' + translation.email} />
                     </FormSection>
-                    <FormSection name="When">
-                        <FormRow name="Starts on" isRequired={true}>
-                            <StartTime errorContent="Start time cannot be empty" 
+                    <FormSection name={translation.when}>
+                        <FormRow name={translation.starts_on} isRequired={true}>
+                            <StartTime errorContent={translation.start_time + ' ' + translation.empty_error}
                                        ref={this.createRef("startTime")} />
                         </FormRow>
                         <FormRow name="Duration">
@@ -174,15 +172,15 @@ export default class EventForm extends Component {
                     </FormSection>
                     {this.state.submissionError && 
                         <InfoFrame className="info-error"
-                                   title="Oops!"
-                                   description="Something went wrong, try again later." />}
-                    <button value="Publish event" onClick={this.validateForm} type="button" id="submit"> Publish event </button>
+                                   title={translation.main_error_title}
+                                   description={translation.main_error_content} />}
+                    <button value={translation.submit} onClick={this.validateForm} type="button" id="submit"> {translation.submit} </button>
                 </form>
 
               ) : (
                     <InfoFrame className="success"
-                               title="Success"
-                               description="Event has been created." />
+                               title={translation.success_mesage_title}
+                               description={translation.success_mesage_content}/>
               )
 
             }

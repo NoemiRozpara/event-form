@@ -88,7 +88,6 @@ export default class TextArea extends Component {
 }
 
 TextArea.propTypes = {
-	name: PropTypes.string.isRequired,
     isRequired: PropTypes.bool,
     value: PropTypes.string,
     ariaLabel: PropTypes.string,

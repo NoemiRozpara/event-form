@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import FormControl from './FormControl'
 import ErrorPopup from './Error'
 
 export default class PaymentSection extends Component {
@@ -52,7 +51,7 @@ export default class PaymentSection extends Component {
     returnData() {
 
         let paid_event = {paid_event: this.state.paid_event, 
-                          event_fee: this.state.event_fee }
+                          event_fee: parseInt(this.state.event_fee) }
         return {...paid_event}
     }
 

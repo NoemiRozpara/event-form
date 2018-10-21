@@ -33,6 +33,7 @@
 		border-bottom: 2px solid #f1f1f2;
 		padding: 1.5em 0 .8em;
 		width: 100%;
+		text-transform: capitalize
 	}
 
 	.form-row{
@@ -86,7 +87,7 @@
 	}
 }
 
-label, .info{
+label, .info, .gray{
 	color: $dark-gray;
 }
 
@@ -96,7 +97,7 @@ label, .info{
 
 .form-row-label{
 	text-transform: uppercase;
-	color: $blue;
+	color: $light-blue;
 	width: 150px;
 	padding: 10px 0;
 	order: -1;

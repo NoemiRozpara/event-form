@@ -19,7 +19,7 @@ export default class Category extends Component {
 	}
 
 	returnData(){
-        return {category_id: this.state.value}
+        return {category_id: parseInt(this.state.value)}
     }
 
     render(){
@@ -44,6 +44,5 @@ export default class Category extends Component {
 }
 
 Category.propTypes = {
-	name: PropTypes.string.isRequired,
 	source: PropTypes.array.isRequired
 }

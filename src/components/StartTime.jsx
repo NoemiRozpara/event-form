@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import FormControl from './FormControl'
 import ErrorPopup from './Error'
+import translation from '../data/messages-en.json'
 
 export default class StartTime extends Component {
 
@@ -61,7 +61,8 @@ export default class StartTime extends Component {
 
     returnData(){
         let hour = this.state.startTime.split(':');
-        let hourMilitary = hour[0] * this.state.ampm + ':' + hour[1];
+        hour[0] = (this.state.ampm == 2 && hour[0] == 12) ? "00" : hour[0] * this.state.ampm;
+        let hourMilitary = hour[0] + ':' + hour[1];
         return { date: (this.state.startDate + 'T' + hourMilitary) }
     }
 
@@ -78,7 +79,7 @@ export default class StartTime extends Component {
                     <label htmlFor={"input" + uniqueKey + 1} 
                            title="Start date"
                            className="input-label" />
-                    <span>at</span>
+                    <span className="gray">{translation.at}</span>
                     <input type="time"
                            name="startTime"
                            id = { "input" + uniqueKey + 2}
@@ -91,7 +92,8 @@ export default class StartTime extends Component {
                            name="ampm"
                            value={1}
                            id = { "input" + uniqueKey + 3}
-                           onChange = {this.update}  />
+                           onChange = {this.update}  
+                           defaultChecked />
                     <label htmlFor={"input" + uniqueKey + 3} 
                            title="Hour AM"
                            className="input-label">
@@ -101,8 +103,7 @@ export default class StartTime extends Component {
                            name="ampm"
                            value={2}
                            id = { "input" + uniqueKey + 4}
-                           onChange = {this.update} 
-                           defaultChecked />
+                           onChange = {this.update} />
                     <label htmlFor={"input" + uniqueKey + 4} 
                            title="Hour PM"
                            className="input-label">
