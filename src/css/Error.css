@@ -7,6 +7,7 @@
 	border-radius: 3px;
 	padding: 3px;
 	height: fit-content;
+	box-sizing: border-box;
 }
 
 .error::before{
@@ -22,4 +23,15 @@
 	top: 50%;
 	transform: translateY(-50%);
 	border-radius: 3px;
+}
+
+@media(max-width: 769px){
+	.error{
+		width: 100%;
+		margin-left: 0;
+		text-align: center;
+	}
+	.error::before{
+		display: none;
+	}
 }

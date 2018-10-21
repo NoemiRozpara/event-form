@@ -81,7 +81,7 @@ export default class PaymentSection extends Component {
                         Paid event 
                     </label>
                     { this.state.paid_event &&
-                    <div>
+                    <div className="baseline-container">
                         <input type="number"
                                name="event_fee"
                                placeholder="Fee"

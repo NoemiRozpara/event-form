@@ -30,3 +30,17 @@
 .item-wrapper-80:last-child{
 	margin-right: 0 !important
 }
+
+@media(max-width: 768px){
+	.item-wrapper-80{
+		min-width: 100%;
+		max-width: 100%;
+		margin: 0 !important;
+		justify-content: center;
+	}
+
+	.item-wrapper-80 input:not([type="radio"]), .item-wrapper-80 textarea, .item-wrapper-80 select{
+		margin: 15px 5px !important;
+		width: 100%
+	}
+}

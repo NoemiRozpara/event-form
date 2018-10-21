@@ -32,6 +32,11 @@ body{
 	justify-content: space-between;
 }
 
+.baseline-container{
+	display: flex;
+	align-items: baseline;
+}
+
 @media(min-width: 768px){
 	.container{
 		max-width: 750px
@@ -41,5 +46,11 @@ body{
 @media(min-width: 992px){
 	.container{
 		max-width: 970px
+	}
+}
+
+@media(max-width: 769px){
+	.row{
+		flex-direction: column;
 	}
 }
