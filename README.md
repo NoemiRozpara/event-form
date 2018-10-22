@@ -1,12 +1,16 @@
 #Event form   
 
 ##Installation
+$git clone https://noemirozpara@bitbucket.org/noemirozpara/create-event.git   
+$cd create-event   
 $npm install   
 **THEN**  
-$npm start (to run in development mode)  
+$npm start (to run in development mode)   
+open http://localhost:3000 (for the first time it may take a while)  
 **OR**  
 $npm run build (to build production files)   
 $serve -s build (to serve production version of app)    
+open http://localhost:5000   
 
 ##Used plugins
 * mini-css-webpack-plugin and mini-html-webpack-plugin to generate static build files 

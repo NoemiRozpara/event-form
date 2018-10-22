@@ -7,7 +7,7 @@ export default class FormControl extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            value: this.props.defaultValue || 0,
+            value: this.props.defaultValue || '',
             isRequired:
                 typeof this.props.isRequired !== "undefined"
                     ? this.props.isRequired
@@ -34,12 +34,13 @@ export default class FormControl extends Component {
     }
 
     validate() {
+        let currentValue = this.state.value;
         if (this.state.shouldValidate === false) return false;
 
         if (
             (this.state.isRequired === true &&
-                this.state.value.replace(/\s/g, '').length === 0) ||
-            (! this.state.value.replace(/\s/g, '').length > 0 &&
+                currentValue.replace(/\s/g, '').length === 0) ||
+            (! currentValue.replace(/\s/g, '').length > 0 &&
                 typeof this.state.value !== this.props.expectedValue)
         ) {
             this._focus();
