@@ -10,7 +10,7 @@ export default class StartTime extends Component {
             error: false,
             startDate: "",
             startTime: "",
-            ampm: "1",
+            ampm: 1,
             currentError: this.props.errorContent.empty
         };
 
@@ -51,6 +51,12 @@ export default class StartTime extends Component {
                 });
             }
         }, 500)
+    }
+
+    update = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        })
     }
 
     validate() {
