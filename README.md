@@ -1,8 +1,7 @@
 #Event form   
 
 ##Installation
-$git clone https://noemirozpara@bitbucket.org/noemirozpara/create-event.git   
-$cd create-event   
+$cd /directory/with/unpacked/project 
 $npm install   
 **THEN**  
 $npm start (to run in development mode)   
