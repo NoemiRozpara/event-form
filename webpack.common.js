@@ -11,29 +11,8 @@ module.exports = {
 	plugins: [
 		new CleanWebpackPlugin(['dist']),
 		new HtmlWebpackPlugin({
-			title: 'Production'
-		}),
-		new MiniCssExtractPlugin({
-            // Options similar to the same options in webpackOptions.output
-            // both options are optional
-            filename: "[name].css",
-            chunkFilename: "[id].css"
-        })
-	],
-	module: {
-		rules: [{
-            test: /\.scss$/,
-            use: [{
-	                loader: process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader,
-	            }, {
-	                loader: "css-loader"
-	            }, {
-	                loader: "sass-loader",
-	                options: {
-	                    implementation: require("node-sass")
-	                }
-	            }]
-            ]
-        }]
-    }
+			title: 'Production',
+        	filename: 'index.html'
+		})
+	]
 }

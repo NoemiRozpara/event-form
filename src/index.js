@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import EventApp from './components/App';
-import AppState from './appState.jsx';
+import AppConfig from './appConfig.jsx';
 
-ReactDOM.render(<EventApp apiUrl={AppState.apiUrl} translationFile={AppState.translationFile}/>, document.getElementById('root'));
+ReactDOM.render(<EventApp apiUrl={AppConfig.apiUrl} 
+						  translationFile={AppConfig.translationFile} 
+						  loggedInId={AppConfig.loggedInId}/>, 
+				document.getElementById('root'));

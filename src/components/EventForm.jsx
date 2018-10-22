@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import categories from '../data/categories.json'
-import employees from '../data/employes.json'
+
 import FormSection from './FormSection'
 import FormRow from './FormRow'
 import FormControl from './FormControl'
@@ -10,10 +9,11 @@ import PaymentSection from './PaymentSection'
 import StartTime from './StartTime'
 import Coordinator from './Coordinator'
 import Category from './Category'
-import Duration from './Duration'
 import InfoFrame from './InfoFrame'
 
 import translation from '../data/messages-en.json'
+import categories from '../data/categories.json'
+import employees from '../data/employes.json'
 
 import '../css/EventForm.scss'
 
@@ -27,11 +27,6 @@ export default class EventForm extends Component {
             errorOccured: false,
             loading: true,
             loggedInName: ''
-        }
-
-        this.allRefs = {
-        	title: React.createRef(),
-        	rewardPoints: React.createRef()
         }
 
         this.allRefs = [];
@@ -77,6 +72,7 @@ export default class EventForm extends Component {
     }
 
     validateForm(){
+      // eslint-disable-next-line
     	let error = Object.keys(this.allRefs).some((ref) => { 
             if(typeof this.allRefs[ref].current.validate === 'function'){
                  return this.allRefs[ref].current.validate() === true
@@ -88,11 +84,13 @@ export default class EventForm extends Component {
 
     submitForm(){
         let resultArray = {};
+        // eslint-disable-next-line
         Object.keys(this.allRefs).map((ref, i) => { 
             let result = this.allRefs[ref].current.returnData();
+            // eslint-disable-next-line
             Object.keys(result).map(function(key, index) {
-                let keyName = '"' + key + '"';
-               resultArray[keyName] = result[key]
+              let keyName = '"' + key + '"';
+              resultArray[keyName] = result[key]
             });
         })
         try{
@@ -166,14 +164,21 @@ export default class EventForm extends Component {
                             <StartTime errorContent={translation.start_time + ' ' + translation.empty_error}
                                        ref={this.createRef("startTime")} />
                         </FormRow>
-                        <FormRow name="Duration">
-                            <Duration ref={this.createRef("duration")} />
+                        <FormRow name={translation.duration_name}>
+                            <FormControl type="number"
+                                         name="duration"
+                                         ariaDescription={translation.duration_label}
+                                         ariaLabel={translation.duration_info}
+                                         placeholder={translation.duration_placeholder}
+                                         ref={this.createRef("duration")}/>
                         </FormRow>
                     </FormSection>
+
                     {this.state.submissionError && 
                         <InfoFrame className="info-error"
                                    title={translation.main_error_title}
-                                   description={translation.main_error_content} />}
+                                   description={translation.main_error_content} /> }
+
                     <button value={translation.submit} onClick={this.validateForm} type="button" id="submit"> {translation.submit} </button>
                 </form>
 
@@ -183,13 +188,13 @@ export default class EventForm extends Component {
                                description={translation.success_mesage_content}/>
               )
 
-            }
-            	
+            }	
             </div>
-        );
+        )
     }
 }
 
 EventForm.propTypes = {
-    apiUrl: PropTypes.string
+    apiUrl: PropTypes.string,
+    loggedInId: PropTypes.number,
 }

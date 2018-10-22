@@ -27,5 +27,9 @@
 	"at": "at",
 	"me": "me",
 	"others": "others",
+	"duration_name": "Duration",
+	"duration_placeholdee": "Number",
+	"duration_label": "Event duration in hours",
+	"duration_info": "hours",
 	"responsible_name": "Responsible"
 }

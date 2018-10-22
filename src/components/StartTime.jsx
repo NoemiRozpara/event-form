@@ -61,6 +61,7 @@ export default class StartTime extends Component {
 
     returnData(){
         let hour = this.state.startTime.split(':');
+        // eslint-disable-next-line
         hour[0] = (this.state.ampm == 2 && hour[0] == 12) ? "00" : hour[0] * this.state.ampm;
         let hourMilitary = hour[0] + ':' + hour[1];
         return { date: (this.state.startDate + 'T' + hourMilitary) }
