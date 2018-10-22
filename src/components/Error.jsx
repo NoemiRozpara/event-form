@@ -1,17 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import "../css/Error.scss";
 
-export default class ErrorPopup extends Component {
-    render() {
-        return (
-            <div className="error">
-                <span>{this.props.errorContent}</span>
-            </div>
-        );
-    }
+const ErrorPopup = ({errorContent}) =>{
+    return (
+        <div className="error">
+            <span>{errorContent}</span>
+        </div>
+    )
 }
 
 ErrorPopup.propTypes = {
     errorContent: PropTypes.string
 };
+
+export default ErrorPopup

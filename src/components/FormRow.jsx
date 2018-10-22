@@ -1,27 +1,29 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
-export default class FormRow extends Component {
-    render() {
-        const uniqueKey = Math.random().toString(10);
-        return (
-            <div className="row form-row">
-                <span id={"groupTitle" + uniqueKey} className="form-row-label">
-                    {this.props.name}{" "}
-                    {this.props.isRequired && <em aria-label="required">*</em>}
-                </span>
-                <div
-                    role="group"
-                    aria-labelledby={"groupTitle" + uniqueKey}
-                    className="form-row-group"
-                >
-                    {this.props.children}
-                </div>
+const uniqueKey = Math.random().toString(10);
+
+const FormRow = ({name, isRequired, children}) => {
+    return (
+        <div className="row form-row">
+            <span id={"groupTitle" + uniqueKey} className="form-row-label">
+                {name}{" "}
+                {isRequired && <em aria-label="required">*</em>}
+            </span>
+            <div
+                role="group"
+                aria-labelledby={"groupTitle" + uniqueKey}
+                className="form-row-group"
+            >
+                {children}
             </div>
-        );
-    }
+        </div>
+    )
 }
 
 FormRow.propTypes = {
-    name: PropTypes.string
-};
+    name: PropTypes.string,
+    isRequired: PropTypes.bool
+}
+
+export default FormRow;

@@ -58,8 +58,8 @@ export default class StartTime extends Component {
 
     returnData() {
         let hour = this.state.startTime.split(":");
+        hour[0] =  
         // eslint-disable-next-line
-        hour[0] =
             this.state.ampm == 2 && hour[0] == 12
                 ? "00"
                 : hour[0] * this.state.ampm;
