@@ -40,7 +40,8 @@ export default class PaymentSection extends Component {
             currentValue = event.target.value === "true";
             errorValue = false;
         } else {
-            currentValue = event.target.value;
+            currentValue = Math.round(event.target.value * 100) / 100;
+            event.target.value = currentValue;
         }
         this.setState({
             [event.target.name]: currentValue,

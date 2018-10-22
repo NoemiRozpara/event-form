@@ -23,6 +23,11 @@ export default class FormControl extends Component {
     }
 
     updateValue = (event) => {
+        if (this.props.type === "number"){
+            let value = event.target.value.toString().replace(/\./g, '').replace(/\,/g, '');
+            event.target.value = value;
+        }
+        
         this.setState({
             value: event.target.value
         });
@@ -59,7 +64,7 @@ export default class FormControl extends Component {
     returnData() {
         let value =
             this.props.type === "number"
-                ? parseInt(this.state.value, 10)
+                ? parseInt(this.state.value.replace('.', '').replace(',', ''), 10)
                 : this.state.value.replace(/\s\s+/g, ' ');
         return { [this.props.name]: value };
     }
