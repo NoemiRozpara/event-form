@@ -34,7 +34,7 @@ export default class FormControl extends Component {
     }
 
     validate() {
-        let currentValue = this.state.value;
+        let currentValue = this.state.value.toString();
         if (this.state.shouldValidate === false) return false;
 
         if (
