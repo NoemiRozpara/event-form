@@ -3,10 +3,10 @@
 ##Installation
 $npm install   
 
-$npm start (to run in development mode)
-**OR**
-$npm run build (to build production files)
-$serve -s build (to serve production version of app)  
+$npm start (to run in development mode)  
+**OR**  
+$npm run build (to build production files)   
+$serve -s build (to serve production version of app)    
 
 ##Used plugins
 * mini-css-webpack-plugin and mini-html-webpack-plugin to generate static build files 
