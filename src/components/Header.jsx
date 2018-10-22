@@ -1,8 +1,7 @@
-import React, { Component } from 'react'
-import '../css/Header.scss'
+import React, { Component } from "react";
+import "../css/Header.scss";
 
 export default class Header extends Component {
-
     render() {
         return (
             <header className="container-fluid">

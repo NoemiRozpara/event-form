@@ -1,17 +1,17 @@
-import React, { Component } from 'react'
-import ErrorPopup from './Error'
-import translation from '../data/messages-en.json'
+import React, { Component } from "react";
+import ErrorPopup from "./Error";
+
+import translation from "../data/messages-en.json";
 
 export default class StartTime extends Component {
-
-    constructor(props, context){
+    constructor(props, context) {
         super(props, context);
         this.state = {
             error: false,
-            startDate: '',
-            startTime: '',
-            ampm: '1'
-        }
+            startDate: "",
+            startTime: "",
+            ampm: "1"
+        };
 
         this.update = this.update.bind(this);
         this.checkTimeValue = this.checkTimeValue.bind(this);
@@ -21,98 +21,116 @@ export default class StartTime extends Component {
         this.startingDate = this.startingDate.toLocaleDateString("sq-AL");
     }
 
-    checkTimeValue(event){
+    checkTimeValue(event) {
         let hour = event.target.value;
-        if(hour > '12:59'){
-            event.target.value = '12:00';
+        if (hour > "12:59") {
+            event.target.value = "12:00";
             this.setState({
                 error: true
-            })
-        }
-        else{
+            });
+        } else {
             this.setState({
                 error: false,
                 startTime: event.target.value
-            })
+            });
         }
     }
 
-    update(event){
+    update(event) {
         this.setState({
             [event.target.name]: event.target.value
-        })
+        });
     }
 
-    validate(){
-
-        if(this.state.startTime === '' || this.state.startDate === ''){
+    validate() {
+        if (this.state.startTime === "" || this.state.startDate === "") {
             this.setState({
                 error: true
-            })
-            return(true)
-        }
-        else{
+            });
+            return true;
+        } else {
             this.setState({
                 error: false
-            })
-            return(false)
+            });
+            return false;
         }
     }
 
-    returnData(){
-        let hour = this.state.startTime.split(':');
+    returnData() {
+        let hour = this.state.startTime.split(":");
         // eslint-disable-next-line
-        hour[0] = (this.state.ampm == 2 && hour[0] == 12) ? "00" : hour[0] * this.state.ampm;
-        let hourMilitary = hour[0] + ':' + hour[1];
-        return { date: (this.state.startDate + 'T' + hourMilitary) }
+        hour[0] =
+            this.state.ampm == 2 && hour[0] == 12
+                ? "00"
+                : hour[0] * this.state.ampm;
+        let hourMilitary = hour[0] + ":" + hour[1];
+        return { date: this.state.startDate + "T" + hourMilitary };
     }
 
-    render(){
-        const uniqueKey = Math.random().toString(36).substring(0, 5);
-    	return(
+    render() {
+        const uniqueKey = Math.random().toString(10);
+        return (
             <div className="row">
                 <div className="row-items-wrapper unset-inner-rows">
-                    <input type="date"
-                           name="startDate"
-                           id = { "input" + uniqueKey + 1}
-                           onChange = {this.update}
-                           min={this.startingDate} />
-                    <label htmlFor={"input" + uniqueKey + 1} 
-                           title="Start date"
-                           className="input-label" />
+                    <input
+                        type="date"
+                        name="startDate"
+                        id={"input" + uniqueKey + 1}
+                        onChange={this.update}
+                        min={this.startingDate}
+                    />
+                    <label
+                        htmlFor={"input" + uniqueKey + 1}
+                        title="Start date"
+                        className="input-label"
+                    />
                     <span className="gray">{translation.at}</span>
-                    <input type="time"
-                           name="startTime"
-                           id = { "input" + uniqueKey + 2}
-                           onChange = {this.checkTimeValue} 
-                           defaultChecked/>
-                    <label htmlFor={"input" + uniqueKey + 2} 
-                           title="Start time"
-                           className="input-label" />
-                    <input type="radio"
-                           name="ampm"
-                           value={1}
-                           id = { "input" + uniqueKey + 3}
-                           onChange = {this.update}  
-                           defaultChecked />
-                    <label htmlFor={"input" + uniqueKey + 3} 
-                           title="Hour AM"
-                           className="input-label">
+                    <input
+                        type="time"
+                        name="startTime"
+                        id={"input" + uniqueKey + 2}
+                        onChange={this.checkTimeValue}
+                        defaultChecked
+                    />
+                    <label
+                        htmlFor={"input" + uniqueKey + 2}
+                        title="Start time"
+                        className="input-label"
+                    />
+                    <input
+                        type="radio"
+                        name="ampm"
+                        value={1}
+                        id={"input" + uniqueKey + 3}
+                        onChange={this.update}
+                        defaultChecked
+                    />
+                    <label
+                        htmlFor={"input" + uniqueKey + 3}
+                        title="Hour AM"
+                        className="input-label"
+                    >
                         AM
                     </label>
-                    <input type="radio"
-                           name="ampm"
-                           value={2}
-                           id = { "input" + uniqueKey + 4}
-                           onChange = {this.update} />
-                    <label htmlFor={"input" + uniqueKey + 4} 
-                           title="Hour PM"
-                           className="input-label">
+                    <input
+                        type="radio"
+                        name="ampm"
+                        value={2}
+                        id={"input" + uniqueKey + 4}
+                        onChange={this.update}
+                    />
+                    <label
+                        htmlFor={"input" + uniqueKey + 4}
+                        title="Hour PM"
+                        className="input-label"
+                    >
                         PM
                     </label>
                 </div>
-                { this.state.error && <ErrorPopup errorContent={this.props.errorContent} /> }
-	    	</div>
-    	)
+                {this.state.error && (
+                    <ErrorPopup errorContent={this.props.errorContent} />
+                )}
+            </div>
+        );
     }
 }
