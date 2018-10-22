@@ -10,6 +10,7 @@ import StartTime from "./StartTime";
 import Coordinator from "./Coordinator";
 import Category from "./Category";
 import InfoFrame from "./InfoFrame";
+import Duration from "./Duration";
 
 import translation from "../data/messages-en.json";
 import categories from "../data/categories.json";
@@ -21,59 +22,34 @@ export default class EventForm extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            categories: [],
-            employees: [],
             errorOccured: false,
-            loading: true,
-            loggedInName: ""
+            /*loading: true,*/
+            loggedInName: "",
+            displayForm: true,
+            submissionError: false
         };
 
         this.allRefs = [];
-        this.createRef = this.createRef.bind(this);
-        this.validateForm = this.validateForm.bind(this);
-        this.submitForm = this.submitForm.bind(this);
     }
 
     componentDidMount() {
-        /*fetch(this.props.apiUrl, {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        })
-       .then((response) => {console.log(response.text()); return response.json()})
-       .then((responseJson) => {
-           /* this.setState({ 
-                loading: false,
-                categories: responseJson
-            })
-            console.log(responseJson)
-       })
-       .catch((error) => {
-            this.setState({
-                loading: false,
-                errorOccured: true
-            })
-            console.log(error);
-       });*/
+        /* fetch data here if from external server */
         let loggedInUser = employees.find(x => x.id === this.props.loggedInId);
         this.setState({
-            loading: false,
-            categories: categories,
-            employees: employees,
+            /*loading: false,*/
             loggedInName:
                 loggedInUser !== undefined
                     ? loggedInUser.name + " " + loggedInUser.lastname
-                    : false,
-            displayForm: true,
-            submissionError: false
+                    : false
         });
     }
 
-    createRef(name) {
+    createRef = (name) => {
         this.allRefs[name] = React.createRef();
         return this.allRefs[name];
     }
 
-    validateForm() {
+    validateForm = () => {
         // eslint-disable-next-line
         let error = Object.keys(this.allRefs).some(ref => {
             if (typeof this.allRefs[ref].current.validate === "function") {
@@ -83,7 +59,7 @@ export default class EventForm extends Component {
         if (error === false) this.submitForm();
     }
 
-    submitForm() {
+    submitForm = () => {
         let resultArray = {};
         // eslint-disable-next-line
         Object.keys(this.allRefs).map((ref, i) => {
@@ -100,7 +76,7 @@ export default class EventForm extends Component {
                 displayForm: false
             });
         } catch (error) {
-            console.log("erro!" + error);
+            console.log(error);
             this.setState({
                 submissionError: true
             });
@@ -122,6 +98,7 @@ export default class EventForm extends Component {
                                     type="text"
                                     name="title"
                                     expectedValue="string"
+                                    maxLength="100"
                                     ariaDescription={translation.title_label}
                                     errorContent={
                                         translation.title_name +
@@ -157,7 +134,7 @@ export default class EventForm extends Component {
                             <FormRow name={translation.category_name}>
                                 <Category
                                     defaultText={translation.select_category}
-                                    source={this.state.categories}
+                                    source={categories}
                                     info={translation.category_info}
                                     ref={this.createRef("category_id")}
                                 />
@@ -184,9 +161,9 @@ export default class EventForm extends Component {
                         </FormSection>
                         <FormSection name={translation.coordinator_name}>
                             <Coordinator
-                                source={this.state.employees}
+                                source={employees}
                                 currentUser={this.state.loggedInName}
-                                currentUserID={this.props.loggedInId}
+                                loggedInId={this.props.loggedInId}
                                 ref={this.createRef("coordinator")}
                                 errorContent={
                                     translation.invalid_error +
@@ -202,22 +179,21 @@ export default class EventForm extends Component {
                             >
                                 <StartTime
                                     errorContent={
-                                        translation.start_time +
-                                        " " +
-                                        translation.empty_error
+                                        { empty: 
+                                            translation.start_time +
+                                            " " +
+                                            translation.empty_error,
+                                          pastDate: 
+                                            translation.past_date_error }
                                     }
                                     ref={this.createRef("startTime")}
                                 />
                             </FormRow>
                             <FormRow name={translation.duration_name}>
-                                <FormControl
-                                    type="number"
-                                    name="duration"
+                                <Duration
                                     ariaDescription={translation.duration_label}
                                     ariaLabel={translation.duration_info}
-                                    placeholder={
-                                        translation.duration_placeholder
-                                    }
+                                    placeholder={translation.duration_placeholder}
                                     ref={this.createRef("duration")}
                                 />
                             </FormRow>

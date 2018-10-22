@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import ErrorPopup from "./Error";
+
+import FormError from "./FormError";
 
 export default class FormControl extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            currentValue: this.props.defaultValue || 0,
+            value: this.props.defaultValue || 0,
             isRequired:
                 typeof this.props.isRequired !== "undefined"
                     ? this.props.isRequired
@@ -19,12 +20,11 @@ export default class FormControl extends Component {
                     : true
         };
         this.input = React.createRef();
-        this.updateValue = this.updateValue.bind(this);
     }
 
-    updateValue(event) {
+    updateValue = (event) => {
         this.setState({
-            currentValue: event.target.value
+            value: event.target.value
         });
     }
 
@@ -38,10 +38,9 @@ export default class FormControl extends Component {
 
         if (
             (this.state.isRequired === true &&
-                (this.state.currentValue === 0 ||
-                    this.state.currentValue === " ")) ||
-            (this.state.currentValue !== "" &&
-                typeof this.state.currentValue !== this.props.expectedValue)
+                this.state.value.replace(/\s/g, '').length === 0) ||
+            (! this.state.value.replace(/\s/g, '').length > 0 &&
+                typeof this.state.value !== this.props.expectedValue)
         ) {
             this._focus();
             this.setState({
@@ -57,19 +56,15 @@ export default class FormControl extends Component {
     }
 
     returnData() {
-        let key = this.props.name;
         let value =
             this.props.type === "number"
-                ? parseInt(this.state.currentValue)
-                : this.state.currentValue;
-        console.log(this.props.type);
-        return { [key]: value };
+                ? parseInt(this.state.value, 10)
+                : this.state.value.replace(/\s\s+/g, ' ');
+        return { [this.props.name]: value };
     }
 
     render() {
-        const uniqueKey = Math.random()
-            .toString(36)
-            .substring(0, 5);
+        const uniqueKey = Math.random().toString(10);
         var {
             value,
             onChange,
@@ -102,7 +97,7 @@ export default class FormControl extends Component {
                         {ariaLabel || ""}
                     </label>
                 </div>
-                {this.state.error && <ErrorPopup errorContent={errorContent} />}
+                {this.state.error && <FormError errorContent={errorContent} />}
             </div>
         );
     }

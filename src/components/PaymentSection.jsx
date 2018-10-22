@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ErrorPopup from "./Error";
+import FormError from "./FormError";
 
 import translation from "../data/messages-en.json";
 
@@ -12,12 +12,9 @@ export default class PaymentSection extends Component {
             error: false
         };
         this.validatedControl = React.createRef();
-        this.validate = this.validate.bind(this);
-        this.update = this.update.bind(this);
     }
 
     validate() {
-        console.log(typeof this.state.paid_event);
         if (
             this.state.paid_event &&
             (["", 0, null, undefined].includes(this.state.event_fee) ||
@@ -37,7 +34,7 @@ export default class PaymentSection extends Component {
         }
     }
 
-    update(event) {
+    update = (event) => {
         let currentValue, errorValue;
         if (event.target.name === "paid_event") {
             currentValue = event.target.value === "true";
@@ -54,7 +51,7 @@ export default class PaymentSection extends Component {
     returnData() {
         let paid_event = {
             paid_event: this.state.paid_event,
-            event_fee: parseInt(this.state.event_fee)
+            event_fee: Math.round(this.state.event_fee * 100) / 100
         };
         return { ...paid_event };
     }
@@ -112,7 +109,7 @@ export default class PaymentSection extends Component {
                     )}
                 </div>
                 {this.state.error && (
-                    <ErrorPopup errorContent={this.props.errorContent} />
+                    <FormError errorContent={this.props.errorContent} />
                 )}
             </div>
         );

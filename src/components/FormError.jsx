@@ -1,17 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "../css/Error.scss";
+import "../css/FormError.scss";
 
-const ErrorPopup = ({errorContent}) =>{
+const FormError = ({errorContent}) =>{
     return (
-        <div className="error">
+        <div className="form-error">
             <span>{errorContent}</span>
         </div>
     )
 }
 
-ErrorPopup.propTypes = {
+FormError.propTypes = {
     errorContent: PropTypes.string
 };
 
-export default ErrorPopup
+export default FormError

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ErrorPopup from "./Error";
+import FormError from "./FormError";
 
 import translation from "../data/messages-en.json";
 
@@ -10,42 +10,54 @@ export default class StartTime extends Component {
             error: false,
             startDate: "",
             startTime: "",
-            ampm: "1"
+            ampm: "1",
+            currentError: this.props.errorContent.empty
         };
-
-        this.update = this.update.bind(this);
-        this.checkTimeValue = this.checkTimeValue.bind(this);
 
         this.startingDate = new Date();
         this.startingDate.setDate(this.startingDate.getDate() + 1);
-        this.startingDate = this.startingDate.toLocaleDateString("sq-AL");
+        this.startingDateString = this.startingDate.toLocaleDateString("sq-AL");
     }
 
-    checkTimeValue(event) {
+    checkTimeValue = (event) => {
         let hour = event.target.value;
         if (hour > "12:59") {
             event.target.value = "12:00";
             this.setState({
-                error: true
+                startTime: "12:00"
             });
         } else {
             this.setState({
-                error: false,
                 startTime: event.target.value
             });
         }
     }
 
-    update(event) {
-        this.setState({
-            [event.target.name]: event.target.value
-        });
+    checkDate = (event) => {
+        event.persist();
+        /* immidiate validation after inserting data from keyboard was so annoying */
+        clearTimeout(this.editDate);
+        this.editDate = setTimeout(() => {
+            let date = new Date(event.target.value);
+            if(date < this.startingDate) {
+                this.setState({
+                    error: true,
+                    currentError: this.props.errorContent.pastDate
+                });
+            } else {
+                this.setState({
+                    error: false,
+                    startDate: event.target.value
+                });
+            }
+        }, 500)
     }
 
     validate() {
         if (this.state.startTime === "" || this.state.startDate === "") {
             this.setState({
-                error: true
+                error: true,
+                currentError: this.props.errorContent.empty
             });
             return true;
         } else {
@@ -59,10 +71,11 @@ export default class StartTime extends Component {
     returnData() {
         let hour = this.state.startTime.split(":");
         hour[0] =  
-        // eslint-disable-next-line
-            this.state.ampm == 2 && hour[0] == 12
-                ? "00"
-                : hour[0] * this.state.ampm;
+            (this.state.ampm === "2" && hour[0] === "12")
+                    ? 0
+                    : hour[0] * this.state.ampm;
+        if (hour[0].toString().length === 1) 
+            hour[0] = "0" + hour[0]; 
         let hourMilitary = hour[0] + ":" + hour[1];
         return { date: this.state.startDate + "T" + hourMilitary };
     }
@@ -76,8 +89,8 @@ export default class StartTime extends Component {
                         type="date"
                         name="startDate"
                         id={"input" + uniqueKey + 1}
-                        onChange={this.update}
-                        min={this.startingDate}
+                        onChange={this.checkDate}
+                        min={this.startingDateString}
                     />
                     <label
                         htmlFor={"input" + uniqueKey + 1}
@@ -100,7 +113,7 @@ export default class StartTime extends Component {
                     <input
                         type="radio"
                         name="ampm"
-                        value={1}
+                        value="1"
                         id={"input" + uniqueKey + 3}
                         onChange={this.update}
                         defaultChecked
@@ -115,7 +128,7 @@ export default class StartTime extends Component {
                     <input
                         type="radio"
                         name="ampm"
-                        value={2}
+                        value="2"
                         id={"input" + uniqueKey + 4}
                         onChange={this.update}
                     />
@@ -128,7 +141,7 @@ export default class StartTime extends Component {
                     </label>
                 </div>
                 {this.state.error && (
-                    <ErrorPopup errorContent={this.props.errorContent} />
+                    <FormError errorContent={this.state.currentError} />
                 )}
             </div>
         );

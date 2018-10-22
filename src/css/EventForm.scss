@@ -147,6 +147,7 @@ label, .info, .gray{
 @media(max-width: 768px){
 	.form-row-group{
 		width: 100%;
+		flex-direction: column;
 
 		.row-items-wrapper{
 			min-width: 100%;

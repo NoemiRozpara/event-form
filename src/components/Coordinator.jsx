@@ -1,22 +1,21 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import ErrorPopup from "./Error";
+
+import FormError from "./FormError";
 import FormRow from "./FormRow";
+
 import translation from "../data/messages-en.json";
 
 export default class Coordinator extends Component {
     constructor(context, props) {
         super(context, props);
         this.state = {
-            value: this.props.currentUserID,
+            value: this.props.loggedInId,
             email: "",
             error: false,
-            currentLabel: "",
-            valueToSetLabel: -9
+            currentLabel: ""
         };
         this.validatedControl = React.createRef();
-        this.setEmail = this.setEmail.bind(this);
-        this.updateEmail = this.updateEmail.bind(this);
         this.selectElement = React.createRef();
     }
 
@@ -24,15 +23,20 @@ export default class Coordinator extends Component {
         this.setEmail();
     }
 
-    setEmail(event) {
+    setEmail = (event) => {
         let id = null;
         let optgroupName = null;
         if (typeof event === "undefined") {
-            if (this.props.currentUserID === "undefined") {
-                return;
+            if (typeof this.props.loggedInId === "undefined") {
+                return 0;
             } else {
-                id = this.props.currentUserID;
-                optgroupName = "Me";
+                id = this.props.loggedInId;
+                optgroupName = translation
+                                .me
+                                .charAt(0).toUpperCase() +
+                                translation
+                                .me
+                                .slice(1)
             }
         } else {
             id = event.target.value;
@@ -45,12 +49,16 @@ export default class Coordinator extends Component {
         this.selectElement.current.value = -1;
         this.setState({
             value: id,
-            email: user.email || "",
+            email: 
+                typeof user !== "undefined"
+                ? user.email
+                : '',
             currentLabel: optgroupName + " - " + user.name + " " + user.lastname
         });
     }
 
-    updateEmail(event) {
+    updateEmail = (event) => {
+        event.target.value = event.target.value.replace(/\s+/g, '');
         this.setState({
             email: event.target.value
         });
@@ -74,7 +82,7 @@ export default class Coordinator extends Component {
         return {
             coordinator: {
                 email: this.state.email,
-                id: this.state.value
+                id: parseInt(this.state.value)
             }
         };
     }
@@ -88,7 +96,6 @@ export default class Coordinator extends Component {
                             name={this.props.name}
                             onChange={this.setEmail}
                             ref={this.selectElement}
-                            value={this.state.valueToSetLabel}
                         >
                             <option hidden value={-1}>
                                 {this.state.currentLabel}
@@ -102,7 +109,7 @@ export default class Coordinator extends Component {
                                 {this.props.currentUser ? (
                                     <option
                                         key={-1}
-                                        value={this.props.currentUserID}
+                                        value={this.props.loggedInId}
                                     >
                                         {this.props.currentUser}
                                     </option>
@@ -122,7 +129,7 @@ export default class Coordinator extends Component {
                                     .filter(employee => {
                                         return (
                                             employee.id !==
-                                            this.props.currentUserID
+                                            this.props.loggedInId
                                         );
                                     })
                                     .map((employee, i) => {
@@ -148,7 +155,7 @@ export default class Coordinator extends Component {
                         />
                     </div>
                     {this.state.error && (
-                        <ErrorPopup errorContent={this.props.errorContent} />
+                        <FormError errorContent={this.props.errorContent} />
                     )}
                 </FormRow>
             </div>
@@ -157,5 +164,6 @@ export default class Coordinator extends Component {
 }
 
 Coordinator.propTypes = {
-    source: PropTypes.array.isRequired
+    source: PropTypes.array.isRequired,
+    loggedInId: PropTypes.number
 };

@@ -1,45 +1,36 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import ErrorPopup from "./Error";
+import FormError from "./FormError";
 
 export default class TextArea extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            currentValue: this.props.defaultValue || "",
+            value: this.props.defaultValue || "",
             isRequired:
                 typeof this.props.isRequired !== "undefined"
                     ? this.props.isRequired
                     : false,
             error: false,
-            shouldValidate:
-                typeof this.props.expectedValue === "undefined" &&
-                typeof this.props.isRequired === "undefined"
-                    ? false
-                    : true,
             charsCount: 0
         };
-        this.validatedControl = React.createRef();
-        this.updateValue = this.updateValue.bind(this);
-        this.validate = this.validate.bind(this);
+        this.input = React.createRef();
     }
 
-    updateValue(event) {
+    updateValue = (event) => {
         this.setState({
-            currentValue: event.target.value,
+            value: event.target.value,
             charsCount: event.target.value.length
         });
     }
 
-    validate() {
-        if (this.state.shouldValidate === false) return false;
-
+    validate(){
         if (
             this.state.isRequired === true &&
-            (this.state.currentValue === "" || this.state.currentValue === " ")
+            this.state.value.replace(/\s/g, '').length === 0
         ) {
-            this.validatedControl.current.focus();
-            this.validatedControl.current.scrollIntoView();
+            this.input.current.focus();
+            this.input.current.scrollIntoView();
             this.setState({
                 error: true
             });
@@ -53,10 +44,11 @@ export default class TextArea extends Component {
     }
 
     returnData() {
-        let value = this.state.currentValue
+        let value = this.state.value
             .replace("'", "/'")
             .replace('"', '/"')
-            .replace(":", "/:");
+            .replace(":", "/:")
+            .replace(/\s\s+/g, ' ');
         let result = { description: value };
         return result;
     }
@@ -78,7 +70,7 @@ export default class TextArea extends Component {
                             onChange={this.updateValue}
                             maxLength={this.props.maxLength || ""}
                             rows={this.props.rows || ""}
-                            ref={this.validatedControl}
+                            ref={this.input}
                         />
                         <label
                             htmlFor={"input" + uniqueKey}
@@ -87,7 +79,7 @@ export default class TextArea extends Component {
                         />
                     </div>
                     {this.state.error && (
-                        <ErrorPopup errorContent={this.props.errorContent} />
+                        <FormError errorContent={this.props.errorContent} />
                     )}
                 </div>
                 <div className="row">

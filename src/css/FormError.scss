@@ -1,4 +1,4 @@
-.error{
+.form-error{
 	background: #FCB0AF;
 	color: #FFF;
 	margin-left: 15px;
@@ -26,7 +26,7 @@
 }
 
 @media(max-width: 769px){
-	.error{
+	.form-error{
 		width: 100%;
 		margin-left: 0;
 		text-align: center;
