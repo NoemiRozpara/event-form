@@ -2,7 +2,7 @@
 
 ##Installation
 $npm install   
-
+**THEN**  
 $npm start (to run in development mode)  
 **OR**  
 $npm run build (to build production files)   
