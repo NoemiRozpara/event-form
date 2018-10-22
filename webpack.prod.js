@@ -14,6 +14,8 @@ module.exports = merge(common, {
 	            }, {
 	                loader: "css-loader"
 	            }, {
+	            	loader: "postcss-loader"
+	            }, {
 	                loader: "sass-loader",
 	                options: {
 	                    implementation: require("node-sass")
@@ -28,6 +30,8 @@ module.exports = merge(common, {
 	                loader: MiniCssExtractPlugin.loader
 	            }, {
 	                loader: "css-loader"
+	            }, {
+	            	loader: "postcss-loader"
 	            }
             ]
         }]
