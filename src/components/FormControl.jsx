@@ -7,11 +7,6 @@ export default class FormControl extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            value: this.props.defaultValue || '',
-            isRequired:
-                typeof this.props.isRequired !== "undefined"
-                    ? this.props.isRequired
-                    : false,
             error: false,
             shouldValidate:
                 typeof this.props.expectedValue === "undefined" &&
@@ -72,7 +67,7 @@ export default class FormControl extends Component {
     render() {
         const uniqueKey = Math.random().toString(10);
         var {
-            value,
+            defaultValue,
             onChange,
             ariaDescription,
             ariaLabel,
@@ -85,7 +80,7 @@ export default class FormControl extends Component {
             <div className="row">
                 <div className="row-items-wrapper">
                     <input
-                        defaultValue={value || ""}
+                        defaultValue={defaultValue}
                         id={"input" + uniqueKey}
                         onChange={
                             typeof onChange === "undefined"
@@ -108,6 +103,12 @@ export default class FormControl extends Component {
         );
     }
 }
+
+/*NEW*/
+FormControl.defaultProps = {
+    defaultValue: '',
+    isRequired: false
+};
 
 FormControl.propTypes = {
     name: PropTypes.string.isRequired,

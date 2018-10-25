@@ -6,11 +6,10 @@ export default class TextArea extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            value: this.props.defaultValue || "",
-            isRequired:
-                typeof this.props.isRequired !== "undefined"
-                    ? this.props.isRequired
-                    : false,
+            /*NEW*/
+            value: this.props.defaultValue,
+            /*NEW*/
+            isRequired: this.props.isRequired,
             error: false,
             charsCount: 0
         };
@@ -62,14 +61,14 @@ export default class TextArea extends Component {
                 <div className="row">
                     <div className="row-items-wrapper">
                         <textarea
-                            type={this.props.type}
-                            defaultValue={this.props.value || ""}
+                            /*NEW*/
+                            defaultValue={this.props.defaultValue}
                             name={this.props.name}
                             id={"input" + uniqueKey}
-                            placeholder={this.props.placeholder || ""}
+                            placeholder={this.props.placeholder}
                             onChange={this.updateValue}
-                            maxLength={this.props.maxLength || ""}
-                            rows={this.props.rows || ""}
+                            maxLength={this.props.maxLength}
+                            rows={this.props.rows}
                             ref={this.input}
                         />
                         <label
@@ -96,6 +95,15 @@ export default class TextArea extends Component {
         );
     }
 }
+
+/*NEW*/
+TextArea.defaultProps = {
+    defaultValue: '',
+    isRequired: false,
+    placeholder: '',
+    maxLength: 140,
+    rows: 10
+};
 
 TextArea.propTypes = {
     isRequired: PropTypes.bool,
