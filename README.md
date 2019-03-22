@@ -5,11 +5,15 @@ Form with many different fields to create an event. Validation included.
 $cd /directory/with/unpacked/project 
 $npm install   
 **THEN**  
-$npm start (to run in development mode)   
+```
+$npm start // to run in development mode
+```
 open http://localhost:3000 (for the first time it may take a while)  
 **OR**  
-$npm run build (to build production files)   
-$serve -s build (to serve production version of app)    
+```
+$npm run build // to build production files
+$serve -s build //to serve production version of app 
+```
 open http://localhost:5000   
 
 ## Used plugins
