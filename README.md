@@ -1,7 +1,7 @@
-#Event form   
+# Event form   
 Form with many different fields to create an event. Validation included.   
 
-##Installation
+## Installation
 $cd /directory/with/unpacked/project 
 $npm install   
 **THEN**  
@@ -12,7 +12,7 @@ $npm run build (to build production files)
 $serve -s build (to serve production version of app)    
 open http://localhost:5000   
 
-##Used plugins
+## Used plugins
 * mini-css-webpack-plugin and mini-html-webpack-plugin to generate static build files 
 * sass-loader and node-sass to transpile .scss files
 * postcss-loader to autoprefix styles 
