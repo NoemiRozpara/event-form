@@ -2,8 +2,10 @@
 Form with many different fields to create an event. Validation included.   
 
 ## Installation
+```
 $cd /directory/with/unpacked/project 
 $npm install   
+```
 **THEN**  
 ```
 $npm start // to run in development mode
